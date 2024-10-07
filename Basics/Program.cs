@@ -22,7 +22,7 @@ namespace Basics
             //e01_AlgorithmsAndFunctions.E07.Run();
             //e01_AlgorithmsAndFunctions.E08.Run();
             //e01_AlgorithmsAndFunctions.E09.Run();
-            //e01_AlgorithmsAndFunctions.E10.Run();
+            e01_AlgorithmsAndFunctions.E10.Run();
         }
     }
 }
