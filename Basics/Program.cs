@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BenchmarkDotNet.Running;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace Basics
 {
     internal class Program
     {
-        static void Main()
+        static void Main(string[] args)
         {
             //StructExamples.Run();
             //DynamicExamples.Run();
@@ -22,7 +23,11 @@ namespace Basics
             //e01_AlgorithmsAndFunctions.E07.Run();
             //e01_AlgorithmsAndFunctions.E08.Run();
             //e01_AlgorithmsAndFunctions.E09.Run();
-            e01_AlgorithmsAndFunctions.E10.Run();
+            //e01_AlgorithmsAndFunctions.E10.Run();
+            //Precision.Run();
+            var summary =
+            BenchmarkRunner.Run<Benchmark>();
+            Console.Read();
         }
     }
 }
