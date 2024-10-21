@@ -23,11 +23,12 @@ namespace Basics
             //e01_AlgorithmsAndFunctions.E07.Run();
             //e01_AlgorithmsAndFunctions.E08.Run();
             //e01_AlgorithmsAndFunctions.E09.Run();
-            //e01_AlgorithmsAndFunctions.E10.Run();
+            e01_AlgorithmsAndFunctions.E10.Run();
             //Precision.Run();
-            var summary =
-            BenchmarkRunner.Run<Benchmark>();
-            Console.Read();
+            /*
+             * var summary = BenchmarkRunner.Run<Benchmark>();
+             * Console.Read();
+             */ 
         }
     }
 }

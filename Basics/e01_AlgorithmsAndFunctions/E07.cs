@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Basics.e01_AlgorithmsAndFunctions
 {
@@ -20,41 +16,61 @@ namespace Basics.e01_AlgorithmsAndFunctions
          */
         public static void Run()
         {
-            Console.WriteLine("Enter the first string:");
-            string str1 = Console.ReadLine();
-
-            Console.WriteLine("Enter the second string:");
-            string str2 = Console.ReadLine();
-
-            bool arePalindromes = ArePalindromes(str1, str2);
-            if (arePalindromes)
+            try
             {
-                Console.WriteLine("Both strings are palindromes.");
+                Console.WriteLine("Enter the first string:");
+                string str1 = Console.ReadLine();
+                Console.WriteLine("Enter the second string:");
+                string str2 = Console.ReadLine();
+                bool arePalindromes = ArePalindromes(str1, str2);
+                if (arePalindromes)
+                {
+                    Console.WriteLine("Both strings are palindromes.");
+                }
+                else
+                {
+                    Console.WriteLine("The strings are not palindromes.");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Console.WriteLine("The strings are not palindromes.");
+                Console.WriteLine($"An error occurred: {ex.Message}");
             }
         }
 
         public static string Reverse(string cadena)
         {
-            if (cadena.Length <= 1)
+            try
             {
-                return cadena;
+                if (cadena.Length <= 1)
+                {
+                    return cadena;
+                }
+                else
+                {
+                    return Reverse(cadena.Substring(1)) + cadena[0];
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return Reverse(cadena.Substring(1)) + cadena[0];
+                Console.WriteLine($"An error occurred while reversing the string: {ex.Message}");
+                return string.Empty; // Devuelve una cadena vacía en caso de error
             }
         }
 
         public static bool ArePalindromes(string str1, string str2)
         {
-            string invertedStr1 = Reverse(str1);
-            string invertedStr2 = Reverse(str2);
-
-            return str1.Equals(invertedStr1) && str2.Equals(invertedStr2);
+            try
+            {
+                string invertedStr1 = Reverse(str1);
+                string invertedStr2 = Reverse(str2);
+                return str1.Equals(invertedStr1) && str2.Equals(invertedStr2);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while checking palindromes: {ex.Message}");
+                return false; // Devuelve false en caso de error
+            }
         }
     }
 }
