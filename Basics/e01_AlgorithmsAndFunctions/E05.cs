@@ -14,8 +14,11 @@ namespace Basics.e01_AlgorithmsAndFunctions
             {
                 Console.WriteLine("Enter a string:");
                 string input = Console.ReadLine();
-                string result = RemoveSpaces(input);
+                int spacesRemoved;
+                string result = RemoveSpaces(input, out spacesRemoved);
                 Console.WriteLine("String without spaces: " + result);
+                Console.WriteLine($"Spaces removed: {spacesRemoved}");
+                Console.WriteLine($"Characters remaining: {result.Length}");
             }
             catch (Exception ex)
             {
@@ -23,25 +26,33 @@ namespace Basics.e01_AlgorithmsAndFunctions
             }
         }
 
-        public static string RemoveSpaces(string input)
+        public static string RemoveSpaces(string input, out int spacesRemoved)
         {
             try
             {
                 char[] resultArray = new char[input.Length];
                 int index = 0;
+                spacesRemoved = 0;
+
                 foreach (char c in input)
                 {
                     if (c != ' ')
                     {
                         resultArray[index++] = c;
                     }
+                    else
+                    {
+                        spacesRemoved++;
+                    }
                 }
+
                 return new string(resultArray, 0, index);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"An error occurred while removing spaces: {ex.Message}");
-                return string.Empty; // Devuelve una cadena vacía en caso de error
+                spacesRemoved = 0;
+                return string.Empty; // Return an empty string in case of error
             }
         }
     }

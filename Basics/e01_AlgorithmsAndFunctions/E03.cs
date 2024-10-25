@@ -13,12 +13,20 @@ namespace Basics.e01_AlgorithmsAndFunctions
             {
                 Console.WriteLine("Enter the position of the Fibonacci series you want to calculate:");
                 int n = int.Parse(Console.ReadLine());
+                if (n < 0)
+                {
+                    throw new ArgumentOutOfRangeException("Negative numbers are not valid.");
+                }
                 int result = Fibonacci(n);
                 Console.WriteLine($"The {n}th element in the Fibonacci series is {result}");
             }
             catch (FormatException ex)
             {
                 Console.WriteLine("Input is not a valid integer. Please enter a valid integer.");
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                Console.WriteLine(ex.Message);
             }
             catch (Exception ex)
             {

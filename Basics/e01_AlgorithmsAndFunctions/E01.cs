@@ -2,7 +2,7 @@
 
 namespace Basics.e01_AlgorithmsAndFunctions
 {
-    /* 
+    /*
      * Make a function that tells us if a number is prime.
      */
     internal class E01
@@ -12,19 +12,27 @@ namespace Basics.e01_AlgorithmsAndFunctions
             try
             {
                 Console.WriteLine("Enter an integer:");
-                int number = int.Parse(Console.ReadLine());
-                if (IsPrime(number))
+                int n = int.Parse(Console.ReadLine());
+                if (n < 0)
                 {
-                    Console.WriteLine($"{number} is a prime number.");
+                    throw new ArgumentOutOfRangeException("Negative numbers are not valid.");
+                }
+                if (IsPrime(n))
+                {
+                    Console.WriteLine($"{n} is a prime number.");
                 }
                 else
                 {
-                    Console.WriteLine($"{number} is not a prime number.");
+                    Console.WriteLine($"{n} is not a prime number.");
                 }
             }
             catch (FormatException ex)
             {
                 Console.WriteLine("Input is not a valid integer. Please enter a valid integer.");
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                Console.WriteLine(ex.Message);
             }
             catch (Exception ex)
             {
@@ -32,16 +40,16 @@ namespace Basics.e01_AlgorithmsAndFunctions
             }
         }
 
-        static bool IsPrime(int number)
+        static bool IsPrime(int n)
         {
             try
             {
-                if (number <= 1) return false;
-                if (number == 2) return true;
-                if (number % 2 == 0) return false;
-                for (int i = 3; i <= Math.Sqrt(number); i += 2)
+                if (n <= 1) return false;
+                if (n == 2) return true;
+                if (n % 2 == 0) return false;
+                for (int i = 3; i <= Math.Sqrt(n); i += 2)
                 {
-                    if (number % i == 0) return false;
+                    if (n % i == 0) return false;
                 }
                 return true;
             }

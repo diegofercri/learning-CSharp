@@ -46,16 +46,16 @@ namespace Basics.e01_AlgorithmsAndFunctions
                 decimal change = amountInserted - price;
                 Console.WriteLine($"Total change to be returned: {change} euros");
 
-                int[] coinValues = { 100, 50, 20, 10, 5, 2, 1 }; // Coin values in cents
+                int[] coinAndBillValues = { 500, 200, 100, 50, 20, 10, 5, 2, 1 }; // Values in cents
                 int changeInCents = (int)(change * 100); // Convert change to cents
 
-                foreach (int coin in coinValues)
+                foreach (int value in coinAndBillValues)
                 {
-                    int numberOfCoins = changeInCents / coin;
-                    if (numberOfCoins > 0)
+                    int numberOfUnits = changeInCents / value;
+                    if (numberOfUnits > 0)
                     {
-                        Console.WriteLine($"{numberOfCoins} coin(s) of {coin / 100.0} euros");
-                        changeInCents %= coin;
+                        Console.WriteLine($"{numberOfUnits} unit(s) of {value / 100.0} euros");
+                        changeInCents %= value;
                     }
                 }
             }

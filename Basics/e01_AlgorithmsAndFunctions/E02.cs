@@ -2,7 +2,7 @@
 
 namespace Basics.e01_AlgorithmsAndFunctions
 {
-    /* 
+    /*
      * Design an algorithm that, given the lengths of the three sides of a triangle (A, B, C),
      * determines what type of triangle it is, according to the following cases:
      * 
@@ -31,19 +31,37 @@ namespace Basics.e01_AlgorithmsAndFunctions
                 Console.WriteLine("Enter the length of side C:");
                 double C = double.Parse(Console.ReadLine());
 
-                if (A >= B + C || B >= A + C || C >= A + B)
+                // Identify the hypotenuse and the two other sides
+                double hypotenuse, cathetus1, cathetus2;
+                if (A >= B && A >= C)
+                {
+                    hypotenuse = A;
+                    cathetus1 = B;
+                    cathetus2 = C;
+                }
+                else if (B >= A && B >= C)
+                {
+                    hypotenuse = B;
+                    cathetus1 = A;
+                    cathetus2 = C;
+                }
+                else
+                {
+                    hypotenuse = C;
+                    cathetus1 = A;
+                    cathetus2 = B;
+                }
+
+                // Perform the triangle type checks
+                if (hypotenuse >= cathetus1 + cathetus2)
                 {
                     Console.WriteLine("It is not a triangle.");
                 }
-                else if (Math.Pow(A, 2) == Math.Pow(B, 2) + Math.Pow(C, 2) ||
-                         Math.Pow(B, 2) == Math.Pow(A, 2) + Math.Pow(C, 2) ||
-                         Math.Pow(C, 2) == Math.Pow(A, 2) + Math.Pow(B, 2))
+                else if (Math.Pow(hypotenuse, 2) == Math.Pow(cathetus1, 2) + Math.Pow(cathetus2, 2))
                 {
                     Console.WriteLine("It is a right triangle.");
                 }
-                else if (Math.Pow(A, 2) > Math.Pow(B, 2) + Math.Pow(C, 2) ||
-                         Math.Pow(B, 2) > Math.Pow(A, 2) + Math.Pow(C, 2) ||
-                         Math.Pow(C, 2) > Math.Pow(A, 2) + Math.Pow(B, 2))
+                else if (Math.Pow(hypotenuse, 2) > Math.Pow(cathetus1, 2) + Math.Pow(cathetus2, 2))
                 {
                     Console.WriteLine("It is an obtuse triangle.");
                 }

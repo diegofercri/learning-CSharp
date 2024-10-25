@@ -20,6 +20,10 @@ namespace Basics.e01_AlgorithmsAndFunctions
             {
                 Console.WriteLine("Input is not a valid binary number. Please enter a valid binary number.");
             }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
             catch (Exception ex)
             {
                 Console.WriteLine($"An error occurred: {ex.Message}");
@@ -34,6 +38,10 @@ namespace Basics.e01_AlgorithmsAndFunctions
                 int baseValue = 1; // 2^0
                 for (int i = binary.Length - 1; i >= 0; i--)
                 {
+                    if (binary[i] != '1' && binary[i] != '0')
+                    {
+                        throw new ArgumentOutOfRangeException("Only 1 and 0 are accepted in binary numbers.");
+                    }
                     if (binary[i] == '1')
                     {
                         decimalValue += baseValue;
