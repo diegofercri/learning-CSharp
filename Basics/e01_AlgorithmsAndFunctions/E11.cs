@@ -1,19 +1,16 @@
 using System;
 
 namespace Basics.e01_AlgorithmsAndFunctions
-{
-    internal class E11 : Exercise
     {
-        public E11()
-        {
-        }
 
-        /*
-         * Method that performs the necessary operations for option 11 of the menu.
-         * Calculate if a number is perfect or not.
-         * It does not receive or return any value.
-         */
-        public override void execute()
+    /*
+     * Method that performs the necessary operations for option 11 of the menu.
+     * Calculate if a number is perfect or not.
+     * It does not receive or return any value.
+     */
+    internal class E11
+    {
+        public static void Run()
         {
             try
             {

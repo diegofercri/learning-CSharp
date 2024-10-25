@@ -46,6 +46,12 @@ namespace Basics.e01_AlgorithmsAndFunctions
                         case 9:
                             E09.Run();
                             break;
+                        case 10:
+                            E11.Run();
+                            break;
+                        case 11:
+                            E12.Run();
+                            break;
                         default:
                             Console.WriteLine("Invalid option. Please try again.");
                             break;
@@ -72,12 +78,14 @@ namespace Basics.e01_AlgorithmsAndFunctions
                 Console.WriteLine("7. Exercise 7");
                 Console.WriteLine("8. Exercise 8");
                 Console.WriteLine("9. Exercise 9");
+                Console.WriteLine("10. Exercise 11");
+                Console.WriteLine("11. Exercise 12");
                 Console.WriteLine("Enter your choice:");
 
                 int option;
-                while (!int.TryParse(Console.ReadLine(), out option) || option < 1 || option > 9)
+                while (!int.TryParse(Console.ReadLine(), out option) || option < 1 || option > 11)
                 {
-                    Console.WriteLine("Invalid input. Please enter a number between 1 and 9:");
+                    Console.WriteLine("Invalid input. Please enter a number between 1 and 12:");
                 }
                 return option;
             }
