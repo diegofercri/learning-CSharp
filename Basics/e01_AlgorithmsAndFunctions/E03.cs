@@ -48,7 +48,7 @@ namespace Basics.e01_AlgorithmsAndFunctions
             catch (Exception ex)
             {
                 Console.WriteLine($"An error occurred while calculating Fibonacci: {ex.Message}");
-                return -1; // Devuelve un valor negativo para indicar un error
+                return -1;
             }
         }
     }
