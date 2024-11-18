@@ -1,3 +1,7 @@
+using SafariApp.controller;
+using SafariApp.model;
+using SafariApp.view;
+
 namespace SafariApp
 {
     internal static class Program
@@ -8,10 +12,15 @@ namespace SafariApp
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
-            ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
+            Safari mySafari = new Safari (10, 10);
+            Controller controller = new Controller (mySafari);
+
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault (false);
+
+            Window window = new window(controller); 
+
+            Application.Run(window);
         }
     }
 }
