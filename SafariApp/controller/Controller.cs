@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SafariApp.model;
 
 namespace SafariApp.controller
 {
     internal class Controller
     {
+        public Controller(Safari safari) { }
     }
 }

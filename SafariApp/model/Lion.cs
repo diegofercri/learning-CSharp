@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SafariApp.model
+﻿internal class Lion : Animal
 {
-    internal class Lion
+    // Constructor
+    public Lion(int turn) : base(turn)
     {
+        reproductionTurns = 6;
+    }
+
+    // ToString
+    public override string ToString()
+    {
+        return $"Lion [SpawnTurn: {GetSpawnTurn()}, TurnsAlive: {GetTurnsAlive()}, ReproductionTurns: {reproductionTurns}, " +
+               $"TurnsWithoutFood: {GetTurnsWithoutFood()}, TurnsWithoutFoodToDeath: {GetTurnsWithoutFoodToDeath()}]";
     }
 }

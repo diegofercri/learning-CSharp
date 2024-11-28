@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SafariApp.model
+﻿internal class Plant : Being
 {
-    internal class Plant
+    // Constructor
+    public Plant(int turn) : base(turn)
     {
+        reproductionTurns = 2;
+    }
+
+    // ToString
+    public override string ToString()
+    {
+        return $"Plant [SpawnTurn: {GetSpawnTurn()}, TurnsAlive: {GetTurnsAlive()}, ReproductionTurns: {reproductionTurns}]";
     }
 }
