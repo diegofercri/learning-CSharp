@@ -3,12 +3,12 @@
     // Constructor
     public Plant(int turn) : base(turn)
     {
-        reproductionTurns = 2;
+        reproductionModule = 2;
     }
 
     // ToString
     public override string ToString()
     {
-        return $"Plant [SpawnTurn: {GetSpawnTurn()}, TurnsAlive: {GetTurnsAlive()}, ReproductionTurns: {reproductionTurns}]";
+        return $"Plant [SpawnTurn: {GetSpawnTurn()}, TurnsAlive: {GetTurnsAlive()}, ReproductionTurns: {reproductionModule}]";
     }
 }

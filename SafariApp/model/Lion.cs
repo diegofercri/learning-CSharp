@@ -3,13 +3,13 @@
     // Constructor
     public Lion(int turn) : base(turn)
     {
-        reproductionTurns = 6;
+        reproductionModule = 6;
     }
 
     // ToString
     public override string ToString()
     {
-        return $"Lion [SpawnTurn: {GetSpawnTurn()}, TurnsAlive: {GetTurnsAlive()}, ReproductionTurns: {reproductionTurns}, " +
+        return $"Lion [SpawnTurn: {GetSpawnTurn()}, TurnsAlive: {GetTurnsAlive()}, ReproductionTurns: {reproductionModule}, " +
                $"TurnsWithoutFood: {GetTurnsWithoutFood()}, TurnsWithoutFoodToDeath: {GetTurnsWithoutFoodToDeath()}]";
     }
 }

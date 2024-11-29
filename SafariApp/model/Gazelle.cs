@@ -3,13 +3,13 @@
     // Constructor
     public Gazelle(int turn) : base(turn)
     {
-        reproductionTurns = 4;
+        reproductionModule = 4;
     }
 
     // ToString
     public override string ToString()
     {
-        return $"Gazelle [SpawnTurn: {GetSpawnTurn()}, TurnsAlive: {GetTurnsAlive()}, ReproductionTurns: {reproductionTurns}, " +
+        return $"Gazelle [SpawnTurn: {GetSpawnTurn()}, TurnsAlive: {GetTurnsAlive()}, ReproductionTurns: {reproductionModule}, " +
                $"TurnsWithoutFood: {GetTurnsWithoutFood()}, TurnsWithoutFoodToDeath: {GetTurnsWithoutFoodToDeath()}]";
     }
 }

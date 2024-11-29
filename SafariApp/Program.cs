@@ -18,7 +18,7 @@ namespace SafariApp
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault (false);
 
-            Window window = new window(controller); 
+            Window window = new window(controller);
 
             Application.Run(window);
         }

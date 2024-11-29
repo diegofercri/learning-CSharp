@@ -1,10 +1,13 @@
-﻿namespace SafariApp.model
+﻿using System;
+
+namespace SafariApp.model
 {
     internal class Safari
     {
         // Variables
         private int turn;
         private Being[,] beings;
+        private Random random;
 
         // Constructor
         public Safari(int rows, int cols)
@@ -23,6 +26,7 @@
 
         public Being[,] GetBeings() { return beings; }
         public void SetBeings(Being[,] value) { beings = value; }
+        public Random GetRandom() { return random; }
 
         // ToString
         public override string ToString()
