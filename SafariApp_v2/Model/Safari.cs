@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace SafariApp_v2.Model
 {
@@ -60,12 +62,12 @@ namespace SafariApp_v2.Model
 
 
         // Getters and Setters
-        public int GetTurn() { return turn; }
-        public Being[,] GetBeings() { return beings; }
-        public Random GetRandom() { return random; }
         public int GetNumPlantsAlive() { return numPlantsAlive; }
         public int GetNumGazellesAlive() { return numGazellesAlive; }
         public int GetNumLionsAlive() { return numLionsAlive; }
+        public int GetTurn() { return turn; }
+        public Being[,] GetBeings() { return beings; }
+        public Random GetRandom() { return random; }
 
         // ToString
         public override string ToString()
@@ -209,6 +211,27 @@ namespace SafariApp_v2.Model
                 (int row, int col) = allPositions[i];
                 beings[row, col] = new Lion(this); // Create and place a Lion
             }
+        }
+
+        ///<summary>
+        /// Starts the auto-play feature, which continuously executes PlayTurn every second until the cancellation token is triggered.
+        /// This method is intended to be called from an external trigger, like a button click.
+        /// </summary>
+        ///<param name="token">The cancellation token used to cancel the auto-play operation.</param>
+        public async Task AutoPlay(CancellationToken token)
+        {
+            // The loop continues until the cancellation token is triggered (when Stop is clicked).
+            while (!token.IsCancellationRequested)
+            {
+                // Call PlayTurn to simulate one turn of the safari.
+                PlayTurn();
+
+                // Wait for 1 second (1000 ms) before the next turn.
+                await Task.Delay(1000); // Non-blocking delay to allow UI to remain responsive.
+            }
+
+            // If the loop is cancelled, output a message
+            Console.WriteLine("AutoPlay has been stopped.");
         }
 
         ///<summary>
