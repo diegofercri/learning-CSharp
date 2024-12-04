@@ -33,6 +33,8 @@ namespace SafariApp_v2.Model
             }
 
             turnsAlive++;
+
+            Reproduction(currentRow, currentCol, safari);
         }
 
         /// <summary>

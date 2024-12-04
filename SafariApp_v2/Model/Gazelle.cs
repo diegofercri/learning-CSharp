@@ -21,7 +21,7 @@ namespace SafariApp_v2.Model
         // Methods
         protected override Being CreateNewBeing(int row, int col, Safari safari)
         {
-            Console.WriteLine($"A new Lion has been placed at [{row}, {col}].");
+            Console.WriteLine($"A new Gazelle has been placed at [{row}, {col}].");
             return new Gazelle(safari);
         }
     }

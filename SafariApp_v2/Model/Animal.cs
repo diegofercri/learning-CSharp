@@ -46,6 +46,8 @@ namespace SafariApp_v2.Model
                 Reproduction(currentRow, currentCol, safari);
             }
 
+            turnsAlive++;
+
             // Determine the type of food the animal is looking for
             Type foodType = this is Gazelle ? typeof(Plant) : (this is Lion ? typeof(Gazelle) : null);
             List<(int, int)> foodPositions = GetAdjacentPositionsOfType(foodType, currentRow, currentCol, safari);
@@ -83,7 +85,7 @@ namespace SafariApp_v2.Model
                 }
             }
 
-            turnsAlive++;
+            Reproduction(currentRow, currentCol, safari);
         }
 
         /// <summary>
