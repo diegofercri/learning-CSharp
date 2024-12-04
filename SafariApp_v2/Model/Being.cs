@@ -165,7 +165,6 @@ namespace SafariApp_v2.Model
             if (safari.GetBeing(currentRow, currentCol) == this)
             {
                 safari.KillBeing(currentRow, currentCol); // Clear the position
-                Console.WriteLine($"Being at [{currentRow}, {currentCol}] has died.");
             }
             else
             {

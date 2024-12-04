@@ -55,6 +55,8 @@ namespace SafariApp_v2.Model
 
             turn = 0;
             beings = new Being[rows, cols];
+            activeBeings = new List<(Being being, int row, int col)>();
+
             random = new Random();
 
             FillBeings(); // Fill the beings array
@@ -116,7 +118,7 @@ namespace SafariApp_v2.Model
         }
 
         ///<summary>
-        /// Removes a being at the specified position in the safari matrix.
+        /// Removes a being at the specified position in the safari matrix and activeBeings.
         /// </summary>
         ///<param name="row">Row index where the being should be removed.</param>
         ///<param name="col">Column index where the being should be removed.</param>
@@ -132,11 +134,18 @@ namespace SafariApp_v2.Model
                     // Additional logic that happen when a being dies
                     Console.WriteLine($"{being.GetType().Name} at [{row}, {col}] has died.");
 
-                    // Removes being from activeBeings when its killed (lambda)
-                    activeBeings.RemoveAll(b => b.row == row && b.col == col);
-
                     // Set the position to null, removing the being from the safari matrix
                     beings[row, col] = null;
+
+                    // Set being to null from activeBeings when its killed
+                    for (int i = 0; i < activeBeings.Count; i++)
+                    {
+                        if (activeBeings[i].row == row && activeBeings[i].col == col)
+                        {
+                            activeBeings[i] = (null, row, col);
+                            break;
+                        }
+                    }
                 }
                 else
                 {
@@ -242,16 +251,20 @@ namespace SafariApp_v2.Model
             // First, update the list of active beings
             UpdateActiveBeings();
 
-            // Now iterate over only the active beings and perform their actions
-            foreach (var (being, row, col) in activeBeings)
+            // Now iterate over the active beings and perform their actions
+            for (int i = activeBeings.Count - 1; i >= 0; i--)
             {
+                var (being, row, col) = activeBeings[i];
+
+                if (being == null) continue; // Ignores null values
+
                 if (being is Animal animal)
                 {
-                    animal.PlayTurn(row, col, this); // Pass the position (row, col) to the PlayTurn method
+                    animal.PlayTurn(row, col, this);
                 }
                 else if (being is Plant plant)
                 {
-                    plant.PlayTurn(row, col, this); // Pass the position (row, col) to the PlayTurn method
+                    plant.PlayTurn(row, col, this);
                 }
             }
 
@@ -283,25 +296,6 @@ namespace SafariApp_v2.Model
         }
 
         ///<summary>
-        /// Resets the safari with predefined settings.
-        /// </summary>
-        public void Reset()
-        {
-            // Clear the current beings array (set all positions to null)
-            for (int row = 0; row < beings.GetLength(0); row++)
-            {
-                for (int col = 0; col < beings.GetLength(1); col++)
-                {
-                    beings[row, col] = null;
-                }
-            }
-
-            // Now, reinitialize the beings array with the same number of plants, gazelles, and lions
-            FillBeings(); // Reuse the FillBeings method to refill the array
-            Console.WriteLine("Safari has been reset.");
-        }
-
-        ///<summary>
         /// Updates the number of plants, gazelles, and lions currently in the safari.
         /// </summary>
         ///<returns>A tuple containing the counts of plants, gazelles, and lions.</returns>
@@ -319,6 +313,32 @@ namespace SafariApp_v2.Model
                 else if (being is Gazelle) { numGazellesAlive++; }
                 else if (being is Lion) { numLionsAlive++; }
             }
+        }
+
+        ///<summary>
+        /// Resets the safari with predefined settings.
+        /// </summary>
+        public void Reset()
+        {
+            // Limpia todas las posiciones del array beings
+            for (int row = 0; row < beings.GetLength(0); row++)
+            {
+                for (int col = 0; col < beings.GetLength(1); col++)
+                {
+                    beings[row, col] = null;
+                }
+            }
+
+            // Reinicializa las estadísticas
+            numPlantsAlive = numPlants;
+            numGazellesAlive = numGazelles;
+            numLionsAlive = numLions;
+            turn = 0;
+
+            // Rellena el array beings con nuevas entidades
+            FillBeings();
+
+            Console.WriteLine("Safari has been reset.");
         }
     }
 }
