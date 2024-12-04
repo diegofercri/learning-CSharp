@@ -83,8 +83,7 @@ namespace SafariApp_v2.Model
                 }
             }
 
-            // Call the base PlayTurn method, passing fixed values since position is not relevant.
-            base.PlayTurn(0, 0, safari); // The position values are not used in the base method.
+            turnsAlive++;
         }
 
         /// <summary>
@@ -120,7 +119,7 @@ namespace SafariApp_v2.Model
         private void MoveToPosition(int currentRow, int currentCol, int newRow, int newCol, Safari safari)
         {
             // Set the animal in the new position
-            safari.AddBeing(newRow, newCol, this);
+            safari.SetBeing(newRow, newCol, this);
             // Clear the old position
             safari.ClearPosition(currentRow, currentCol);
             // Attempt reproduction in the new position

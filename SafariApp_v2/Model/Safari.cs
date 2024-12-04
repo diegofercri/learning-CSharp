@@ -16,12 +16,12 @@ namespace SafariApp_v2.Model
         private int numGazellesAlive;
         private int numLionsAlive;
 
-        private int turn; // The current turn of the safari.
+        private int turn;
 
-        private Being[,] beings; // Matrix representing the safari area with all beings (animals, plants, empty spaces).
-        private List<(Being being, int row, int col)> activeBeings; // List storing active beings with their positions.
+        private Being[,] beings; // Matrix representing the safari area
+        private List<(Being being, int row, int col)> activeBeings; // List storing active beings with their positions
 
-        private Random random; // Instance of Random for generating random numbers.
+        private Random random; // Instance of Random
 
         // Constructor
         ///<summary>
@@ -74,7 +74,7 @@ namespace SafariApp_v2.Model
         // ToString
         public override string ToString()
         {
-            return $"Safari [Turn: {turn}, Area: {beings.GetLength(0)}x{beings.GetLength(1)}]"; // String representation of the safari
+            return $"Safari [Turn: {turn}, Area: {beings.GetLength(0)}x{beings.GetLength(1)}]";
         }
 
         // Methods
@@ -86,9 +86,10 @@ namespace SafariApp_v2.Model
         ///<returns>The being at the specified position, or null if the position is out of bounds or empty.</returns>
         public Being GetBeing(int row, int col)
         {
+            // Check if the position is within bounds
             if (row >= 0 && row < beings.GetLength(0) && col >= 0 && col < beings.GetLength(1))
             {
-                return beings[row, col]; // Return the being at the specified position
+                return beings[row, col];
             }
             return null; // Return null if the position is out of bounds or empty
         }
@@ -99,8 +100,9 @@ namespace SafariApp_v2.Model
         ///<param name="row">Row index where the being should be placed.</param>
         ///<param name="col">Column index where the being should be placed.</param>
         ///<param name="being">The being to place in the matrix. It can't be a null value.</param>
-        public void AddBeing(int row, int col, Being being)
+        public void SetBeing(int row, int col, Being being)
         {
+            // Check if the position is within bounds
             if (row >= 0 && row < beings.GetLength(0) && col >= 0 && col < beings.GetLength(1))
             {
                 // Prevent setting null values in the beings array directly
@@ -124,20 +126,20 @@ namespace SafariApp_v2.Model
         ///<param name="col">Column index where the being should be removed.</param>
         public void KillBeing(int row, int col)
         {
-            // Check if the position is valid
+            // Check if the position is within bounds
             if (row >= 0 && row < beings.GetLength(0) && col >= 0 && col < beings.GetLength(1))
             {
                 Being being = beings[row, col];
 
                 if (being != null)
                 {
-                    // Additional logic that happen when a being dies
+                    // Additional logic
                     Console.WriteLine($"{being.GetType().Name} at [{row}, {col}] has died.");
 
-                    // Set the position to null, removing the being from the safari matrix
+                    // Set the position to null from matrix
                     beings[row, col] = null;
 
-                    // Set being to null from activeBeings when its killed
+                    // Set being to null from activeBeings
                     for (int i = 0; i < activeBeings.Count; i++)
                     {
                         if (activeBeings[i].row == row && activeBeings[i].col == col)
@@ -168,7 +170,7 @@ namespace SafariApp_v2.Model
             // Check if the position is within bounds
             if (row >= 0 && row < beings.GetLength(0) && col >= 0 && col < beings.GetLength(1))
             {
-                // Clear the being at the given position (set it to null)
+                // Clear the being at the given position
                 beings[row, col] = null;
             }
             else
@@ -185,6 +187,7 @@ namespace SafariApp_v2.Model
         {
             // Create a list of all possible positions
             List<(int, int)> allPositions = new List<(int, int)>();
+
             for (int r = 0; r < beings.GetLength(0); r++)
             {
                 for (int c = 0; c < beings.GetLength(1); c++)
@@ -229,17 +232,17 @@ namespace SafariApp_v2.Model
         ///<param name="token">The cancellation token used to cancel the auto-play operation.</param>
         public async Task AutoPlay(CancellationToken token)
         {
-            // The loop continues until the cancellation token is triggered (when Stop is clicked).
+            // The loop continues until Stop is clicked
             while (!token.IsCancellationRequested)
             {
-                // Call PlayTurn to simulate one turn of the safari.
+                // Call PlayTurn to simulate one turn
                 PlayTurn();
 
-                // Wait for 1 second (1000 ms) before the next turn.
-                await Task.Delay(1000); // Non-blocking delay to allow UI to remain responsive.
+                // Wait for 1 second
+                await Task.Delay(1000); // Non-blocking delay to allow UI to remain responsive
             }
 
-            // If the loop is cancelled, output a message
+            // When the loop is cancelled, output a message
             Console.WriteLine("AutoPlay has been stopped.");
         }
 
@@ -248,10 +251,10 @@ namespace SafariApp_v2.Model
         /// </summary>
         public void PlayTurn()
         {
-            // First, update the list of active beings
+            // Update the list of active beings
             UpdateActiveBeings();
 
-            // Now iterate over the active beings and perform their actions
+            // Iterate over the active beings and perform their actions
             for (int i = activeBeings.Count - 1; i >= 0; i--)
             {
                 var (being, row, col) = activeBeings[i];
@@ -268,10 +271,10 @@ namespace SafariApp_v2.Model
                 }
             }
 
-            // Update stats on the end of the turn.
+            // Update stats
             UpdateStatistics();
 
-            // Increment the turn
+            // Increment turn
             turn++;
         }
 
@@ -287,7 +290,7 @@ namespace SafariApp_v2.Model
                 for (int col = 0; col < beings.GetLength(1); col++)
                 {
                     Being being = beings[row, col];
-                    if (being != null) // If there is a being (not null), add it to the list along with its position
+                    if (being != null) // Checks if there is a being
                     {
                         activeBeings.Add((being, row, col)); // Add the being along with its position
                     }
@@ -320,7 +323,7 @@ namespace SafariApp_v2.Model
         /// </summary>
         public void Reset()
         {
-            // Limpia todas las posiciones del array beings
+            // Clear matrix
             for (int row = 0; row < beings.GetLength(0); row++)
             {
                 for (int col = 0; col < beings.GetLength(1); col++)
@@ -329,14 +332,13 @@ namespace SafariApp_v2.Model
                 }
             }
 
-            // Reinicializa las estadísticas
+            // Restarts stats
             numPlantsAlive = numPlants;
             numGazellesAlive = numGazelles;
             numLionsAlive = numLions;
             turn = 0;
 
-            // Rellena el array beings con nuevas entidades
-            FillBeings();
+            FillBeings(); // Fill the beings array
 
             Console.WriteLine("Safari has been reset.");
         }

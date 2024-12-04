@@ -7,7 +7,7 @@ namespace SafariApp_v2.Model
     {
         // Variables
         private int spawnTurn;
-        private int turnsAlive;
+        protected int turnsAlive;
         protected int reproductionModule;
         protected bool needsToReproduce;
 
@@ -55,6 +55,7 @@ namespace SafariApp_v2.Model
         protected List<(int, int)> GetAdjacentPositionsOfType(Type type, int currentRow, int currentCol, Safari safari)
         {
             List<(int, int)> positions = new List<(int, int)>();
+
             Being[,] area = safari.GetBeings();
             int rows = area.GetLength(0); // Total rows in the area
             int cols = area.GetLength(1); // Total columns in the area
@@ -106,9 +107,13 @@ namespace SafariApp_v2.Model
                 int newRow = currentRow + dRow[i];
                 int newCol = currentCol + dCol[i];
 
-                if (safari.GetBeing(newRow, newCol) == null)
+                // Check if the new position is within bounds
+                if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < cols)
                 {
-                    positions.Add((newRow, newCol));
+                    if (area[newRow, newCol] == null) // Check if the position is empty
+                    {
+                        positions.Add((newRow, newCol)); // Add the position to the result
+                    }
                 }
             }
 
@@ -151,7 +156,7 @@ namespace SafariApp_v2.Model
         ///<param name="safari">The current instance of the safari.</param>
         public virtual void PlayTurn(int currentRow, int currentCol, Safari safari)
         {
-            UpdateTurnsAlive(safari);
+            throw new NotImplementedException("You can't call this method from being.");
         }
 
         /// <summary>
@@ -181,7 +186,7 @@ namespace SafariApp_v2.Model
         protected void Reproduction(int currentRow, int currentCol, Safari safari)
         {
             // Check if the being is eligible to reproduce
-            if (GetTurnsAlive() == 0 || GetTurnsAlive() % reproductionModule != 0)
+            if (turnsAlive == 0 || turnsAlive % reproductionModule != 0)
             {
                 return; // Not eligible to reproduce
             }
@@ -211,9 +216,8 @@ namespace SafariApp_v2.Model
         /// <param name="safari">The current instace of safari.</param>
         protected void PlaceNewBeing(int row, int col, Safari safari)
         {
-            Being newBeing = CreateNewBeing(safari);
-            safari.AddBeing(row, col, newBeing);
-            Console.WriteLine($"A new being has been placed at [{row}, {col}].");
+            Being newBeing = CreateNewBeing(row, col, safari);
+            safari.SetBeing(row, col, newBeing);
         }
 
         /// <summary>
@@ -221,10 +225,9 @@ namespace SafariApp_v2.Model
         /// </summary>
         /// <param name="safari">The current instance of Safari.</param>
         /// <returns>A new being instance.</returns>
-        protected virtual Being CreateNewBeing(Safari safari)
+        protected virtual Being CreateNewBeing(int row, int col, Safari safari)
         {
-            // Default behavior - can be overridden
-            return new Being(safari);
+            throw new NotImplementedException("You can't call this method from being.");
         }
 
         #endregion

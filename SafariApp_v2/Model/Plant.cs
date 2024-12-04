@@ -1,4 +1,6 @@
-﻿namespace SafariApp_v2.Model
+﻿using System;
+
+namespace SafariApp_v2.Model
 {
     internal class Plant : Being
     {
@@ -24,14 +26,13 @@
         /// <param name="safari">The current instance of Safari.</param>
         public override void PlayTurn(int currentRow, int currentCol, Safari safari)
         {
-            // If the plant needs to reproduce, try to reproduce.
+            // If the plant needs to reproduce, try to reproduce
             if (needsToReproduce)
             {
                 Reproduction(currentRow, currentCol, safari);
             }
 
-            // Call the base PlayTurn method, passing fixed values since position is not relevant.
-            base.PlayTurn(0, 0, safari); // The position values are not used in the base method.
+            turnsAlive++;
         }
 
         /// <summary>
@@ -39,9 +40,10 @@
         /// </summary>
         /// <param name="safari">The current instance of Safari.</param>
         /// <returns>A new Plant.</returns>
-        protected override Being CreateNewBeing(Safari safari)
+        protected override Being CreateNewBeing(int row, int col, Safari safari)
         {
-            return new Plant(safari); // Create a new Plant.
+            Console.WriteLine($"A new Plant has been placed at [{row}, {col}].");
+            return new Plant(safari); // Create a new Plant
         }
     }
 }

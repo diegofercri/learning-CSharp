@@ -1,4 +1,6 @@
-﻿namespace SafariApp_v2.Model
+﻿using System;
+
+namespace SafariApp_v2.Model
 {
     internal class Lion : Animal
     {
@@ -17,8 +19,9 @@
         }
 
         //Methods
-        protected override Being CreateNewBeing(Safari safari)
+        protected override Being CreateNewBeing(int row, int col, Safari safari)
         {
+            Console.WriteLine($"A new Gazelle has been placed at [{row}, {col}].");
             return new Lion(safari);
         }
     }
