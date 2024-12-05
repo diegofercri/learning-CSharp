@@ -2,7 +2,7 @@
 
 namespace SafariApp_v2.Model
 {
-    internal class Lion : Animal
+    internal class Lion : Carnivorous
     {
         // Constructor
         public Lion(Safari safari) : base(safari)

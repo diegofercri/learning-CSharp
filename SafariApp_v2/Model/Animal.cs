@@ -48,9 +48,15 @@ namespace SafariApp_v2.Model
 
             turnsAlive++;
 
-            // Determine the type of food the animal is looking for
-            Type foodType = this is Gazelle ? typeof(Plant) : (this is Lion ? typeof(Gazelle) : null);
-            List<(int, int)> foodPositions = GetAdjacentPositionsOfType(foodType, currentRow, currentCol, safari);
+            // Determines the types of allowed food.
+            List<Type> foodTypes = GetFoodTypes();
+            List<(int, int)> foodPositions = new List<(int, int)>();
+
+            // Search for each type of food and aggregate their positions.
+            foreach (var foodType in foodTypes)
+            {
+                foodPositions.AddRange(GetAdjacentPositionsOfType(foodType, currentRow, currentCol, safari));
+            }
 
             // Select a random position from the list of food positions
             (int, int)? targetPosition = SelectRandomOrSinglePosition(foodPositions, safari);
@@ -87,6 +93,12 @@ namespace SafariApp_v2.Model
 
             Reproduction(currentRow, currentCol, safari);
         }
+
+        /// <summary>
+        /// Returns a list of the type of food the animal can consume.
+        /// </summary>
+        /// <returns>The allowed food type.</returns>
+        protected abstract List<Type> GetFoodTypes();
 
         /// <summary>
         /// Searches for empty positions in adjacent cells. If an empty position is found, the animal moves there.

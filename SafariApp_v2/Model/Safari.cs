@@ -226,27 +226,6 @@ namespace SafariApp_v2.Model
         }
 
         ///<summary>
-        /// Starts the auto-play feature, which continuously executes PlayTurn every second until the cancellation token is triggered.
-        /// This method is intended to be called from an external trigger, like a button click.
-        /// </summary>
-        ///<param name="token">The cancellation token used to cancel the auto-play operation.</param>
-        public async Task AutoPlay(CancellationToken token)
-        {
-            // The loop continues until Stop is clicked
-            while (!token.IsCancellationRequested)
-            {
-                // Call PlayTurn to simulate one turn
-                PlayTurn();
-
-                // Wait for 1 second
-                await Task.Delay(1000); // Non-blocking delay to allow UI to remain responsive
-            }
-
-            // When the loop is cancelled, output a message
-            Console.WriteLine("AutoPlay has been stopped.");
-        }
-
-        ///<summary>
         /// Simulates one turn of the safari by iterating through all active beings and executing their actions.
         /// </summary>
         public void PlayTurn()
