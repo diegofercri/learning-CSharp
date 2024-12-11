@@ -10,19 +10,15 @@ namespace SafariApp_v2.Model
         protected int turnsWithoutFoodToDeath;
 
         // Constructors
-        public Animal(Safari safari) : base(safari)
+        public Animal(int turn) : base(turn)
         {
             turnsWithoutFood = 0;
             turnsWithoutFoodToDeath = 3;  // Default to 3 turns before death without food
         }
 
         // Getters and Setters
-
         public int GetTurnsWithoutFood() { return turnsWithoutFood; }
-        public void SetTurnsWithoutFood(int value) { turnsWithoutFood = value; }
-
         public int GetTurnsWithoutFoodToDeath() { return turnsWithoutFoodToDeath; }
-        public void SetTurnsWithoutFoodToDeath(int value) { turnsWithoutFoodToDeath = value; }
 
         // ToString
         public override string ToString()
@@ -75,18 +71,18 @@ namespace SafariApp_v2.Model
 
                 // Move to the food's position and reset hunger
                 MoveToPosition(currentRow, currentCol, foodRow, foodCol, safari);
-                SetTurnsWithoutFood(0); // Reset hunger after eating
+                turnsWithoutFood = 0; // Reset hunger after eating
             }
             else
             {
+                turnsWithoutFood++; // Increment the hunger counter
                 // If no food is found, the animal may starve to death if it hasn't eaten in enough turns
-                if (GetTurnsWithoutFood() == turnsWithoutFoodToDeath)
+                if (turnsWithoutFood == turnsWithoutFoodToDeath)
                 {
                     Death(currentRow, currentCol, safari); // The animal dies due to starvation
                 }
                 else
                 {
-                    IncrementTurnsWithoutFood(); // Increment the hunger counter
                     Move(currentRow, currentCol, safari); // Move to a new position
                 }
             }
@@ -132,21 +128,8 @@ namespace SafariApp_v2.Model
         /// <param name="safari">The current instance of Safari.</param>
         private void MoveToPosition(int currentRow, int currentCol, int newRow, int newCol, Safari safari)
         {
-            // Set the animal in the new position
-            safari.SetBeing(newRow, newCol, this);
-            // Clear the old position
-            safari.ClearPosition(currentRow, currentCol);
-            // Attempt reproduction in the new position
-            Reproduction(newRow, newCol, safari);
-        }
-
-        /// <summary>
-        /// Increments the turns without food counter for the animal.
-        /// </summary>
-        private void IncrementTurnsWithoutFood()
-        {
-            // Increase the turns without food counter by 1
-            SetTurnsWithoutFood(GetTurnsWithoutFood() + 1);
+            safari.SetBeing(newRow, newCol, this); // Set the animal in the new position
+            safari.ClearPosition(currentRow, currentCol); // Clear the old position
         }
     }
 }

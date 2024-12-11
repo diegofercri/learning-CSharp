@@ -12,9 +12,9 @@ namespace SafariApp_v2.Model
         protected bool needsToReproduce;
 
         // Constructor
-        public Being(Safari safari)
+        public Being(int turn)
         {
-            spawnTurn = safari.GetTurn();
+            spawnTurn = turn;
             turnsAlive = 0;
             needsToReproduce = false;
         }
@@ -186,7 +186,7 @@ namespace SafariApp_v2.Model
         protected void Reproduction(int currentRow, int currentCol, Safari safari)
         {
             // Check if the being is eligible to reproduce
-            if (turnsAlive == 0 || turnsAlive % reproductionModule != 0)
+            if ((turnsAlive == 0 || turnsAlive % reproductionModule != 0) && !needsToReproduce)
             {
                 return; // Not eligible to reproduce
             }
@@ -216,7 +216,7 @@ namespace SafariApp_v2.Model
         /// <param name="safari">The current instace of safari.</param>
         protected void PlaceNewBeing(int row, int col, Safari safari)
         {
-            Being newBeing = CreateNewBeing(row, col, safari);
+            Being newBeing = CreateNewBeing(row, col, safari.GetTurn());
             safari.SetBeing(row, col, newBeing);
         }
 
@@ -225,7 +225,7 @@ namespace SafariApp_v2.Model
         /// </summary>
         /// <param name="safari">The current instance of Safari.</param>
         /// <returns>A new being instance.</returns>
-        protected virtual Being CreateNewBeing(int row, int col, Safari safari)
+        protected virtual Being CreateNewBeing(int row, int col, int turn)
         {
             throw new NotImplementedException("You can't call this method from being.");
         }

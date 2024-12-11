@@ -5,7 +5,7 @@ namespace SafariApp_v2.Model
     internal class Gazelle : Herbivorous
     {
         // Constructor
-        public Gazelle(Safari safari) : base(safari)
+        public Gazelle(int turn) : base(turn)
         {
             reproductionModule = 4;  // The gazelle reproduces every 4 turns.
         }
@@ -19,10 +19,10 @@ namespace SafariApp_v2.Model
         }
 
         // Methods
-        protected override Being CreateNewBeing(int row, int col, Safari safari)
+        protected override Being CreateNewBeing(int row, int col, int turn)
         {
             Console.WriteLine($"A new Gazelle has been placed at [{row}, {col}].");
-            return new Gazelle(safari);
+            return new Gazelle(turn);
         }
     }
 }

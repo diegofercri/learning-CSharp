@@ -24,5 +24,49 @@ namespace WPFBasics
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("You pressed the button");
+        }
+
+        private void CheckAll(object sender, RoutedEventArgs e)
+        {
+            Op1.IsChecked = true;
+            Op2.IsChecked = true;
+            Op3.IsChecked = true;
+            Op4.IsChecked = true;
+        }
+
+        private void UncheckAll(object sender, RoutedEventArgs e)
+        {
+            Op1.IsChecked = false;
+            Op2.IsChecked = false;
+            Op3.IsChecked = false;
+            Op4.IsChecked = false;
+        }
+
+        private void CheckedOp(object sender, RoutedEventArgs e)
+        {
+            if ((Op1.IsChecked == true) && (Op2.IsChecked == true) && (Op3.IsChecked == true) && (Op4.IsChecked == true))
+            {
+                CheckAllBox.IsChecked = true;
+            }
+            else
+            {
+                CheckAllBox.IsChecked = null;
+            }
+        }
+        private void UncheckedOp(object sender, RoutedEventArgs e)
+        {
+            if ((Op1.IsChecked == false) && (Op2.IsChecked == false) && (Op3.IsChecked == false) && (Op4.IsChecked == false))
+            {
+                CheckAllBox.IsChecked = false;
+            }
+            else
+            {
+                CheckAllBox.IsChecked = null;
+            }
+        }
     }
 }

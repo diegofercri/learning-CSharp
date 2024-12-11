@@ -5,7 +5,7 @@ namespace SafariApp_v2.Model
     internal class Lion : Carnivorous
     {
         // Constructor
-        public Lion(Safari safari) : base(safari)
+        public Lion(int turn) : base(turn)
         {
             reproductionModule = 6;  // The lion reproduces every 6 turns.
         }
@@ -19,10 +19,10 @@ namespace SafariApp_v2.Model
         }
 
         //Methods
-        protected override Being CreateNewBeing(int row, int col, Safari safari)
+        protected override Being CreateNewBeing(int row, int col, int turn)
         {
             Console.WriteLine($"A new Lion has been placed at [{row}, {col}].");
-            return new Lion(safari);
+            return new Lion(turn);
         }
     }
 }

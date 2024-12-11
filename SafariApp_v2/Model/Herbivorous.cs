@@ -5,7 +5,7 @@ namespace SafariApp_v2.Model
 {
     internal class Herbivorous : Animal
     {
-        public Herbivorous(Safari safari) : base(safari) { }
+        public Herbivorous(int turn) : base(turn) { }
 
         /// <summary>
         /// Defines the types of food an herbivore can consume.

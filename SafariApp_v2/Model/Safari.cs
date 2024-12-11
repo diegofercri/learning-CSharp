@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Threading;
-
 namespace SafariApp_v2.Model
 {
     internal class Safari
@@ -207,21 +204,21 @@ namespace SafariApp_v2.Model
             for (int i = 0; i < numPlants; i++)
             {
                 (int row, int col) = allPositions[i];
-                beings[row, col] = new Plant(this); // Create and place a Plant
+                beings[row, col] = new Plant(turn); // Create and place a Plant
             }
 
             // Place the gazelles
             for (int i = numPlants; i < numPlants + numGazelles; i++)
             {
                 (int row, int col) = allPositions[i];
-                beings[row, col] = new Gazelle(this); // Create and place a Gazelle
+                beings[row, col] = new Gazelle(turn); // Create and place a Gazelle
             }
 
             // Place the lions
             for (int i = numPlants + numGazelles; i < numPlants + numGazelles + numLions; i++)
             {
                 (int row, int col) = allPositions[i];
-                beings[row, col] = new Lion(this); // Create and place a Lion
+                beings[row, col] = new Lion(turn); // Create and place a Lion
             }
         }
 

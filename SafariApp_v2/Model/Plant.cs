@@ -5,7 +5,7 @@ namespace SafariApp_v2.Model
     internal class Plant : Being
     {
         // Constructor
-        public Plant(Safari safari) : base(safari)
+        public Plant(int turn) : base(turn)
         {
             reproductionModule = 2;  // The plant reproduces every 2 turns.
         }
@@ -42,10 +42,10 @@ namespace SafariApp_v2.Model
         /// </summary>
         /// <param name="safari">The current instance of Safari.</param>
         /// <returns>A new Plant.</returns>
-        protected override Being CreateNewBeing(int row, int col, Safari safari)
+        protected override Being CreateNewBeing(int row, int col, int turn)
         {
             Console.WriteLine($"A new Plant has been placed at [{row}, {col}].");
-            return new Plant(safari); // Create a new Plant
+            return new Plant(turn); // Create a new Plant
         }
     }
 }
