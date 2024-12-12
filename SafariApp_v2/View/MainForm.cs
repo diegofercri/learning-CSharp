@@ -95,11 +95,6 @@ namespace SafariApp_v2.View
                 e.CellStyle.BackColor = Color.Red;
                 e.CellStyle.ForeColor = Color.White;
             }
-            else if (cellValue == "Empty")
-            {
-                e.CellStyle.BackColor = Color.LightGray;
-                e.CellStyle.ForeColor = Color.Black;
-            }
         }
 
         /// <summary>
@@ -135,8 +130,8 @@ namespace SafariApp_v2.View
                 var rowData = new object[cols];
                 for (int col = 0; col < cols; col++)
                 {
-                    // Set the cell value based on the entity type (Lion, Gazelle, Plant, Empty)
-                    rowData[col] = beings[row, col]?.GetType().Name ?? "Empty";
+                    // Set the cell value
+                    rowData[col] = beings[row, col];
                 }
                 beingsGrid.Rows.Add(rowData); // Add the row data to the grid
             }

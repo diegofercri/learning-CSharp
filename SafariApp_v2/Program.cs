@@ -14,7 +14,7 @@ namespace SafariApp_v2
         [STAThread]
         static void Main()
         {
-            Safari safari = new Safari(10, 10, 20, 10, 0);
+            Safari safari = new Safari(10, 10, 20, 10, 5);
             SafariController controller = new SafariController(safari);
 
             Application.EnableVisualStyles();

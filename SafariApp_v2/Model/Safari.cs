@@ -75,6 +75,41 @@ namespace SafariApp_v2.Model
         }
 
         // Methods
+        /// <summary>
+        /// Converts the beings matrix to a string matrix, where each element 
+        /// contains the type name of the object or "Empty" if the element is null.
+        /// </summary>
+        /// <returns>
+        /// A string[,] matrix. Returns null if beings is null.
+        /// </returns>
+        public string[,] GetBeingsToString()
+        {
+            // Check if the beings matrix is null
+            if (beings == null)
+                return null;
+
+            // Get the dimensions of the beings matrix
+            int rows = beings.GetLength(0);
+            int cols = beings.GetLength(1);
+
+            // Create a new string matrix with the same dimensions as beings
+            string[,] beingsToString = new string[rows, cols];
+
+            // Iterate through each element in the beings matrix
+            for (int i = 0; i < rows; i++) // Loop through rows
+            {
+                for (int j = 0; j < cols; j++) // Loop through columns
+                {
+                    beingsToString[i, j] = beings[i, j] != null
+                        ? beings[i, j].GetType().Name // Get the object's type name as a string
+                        : ""; // Assign "Empty" for null values
+                }
+            }
+
+            return beingsToString;
+        }
+
+
         ///<summary>
         /// Retrieves the being at the specified position in the safari matrix.
         /// </summary>
