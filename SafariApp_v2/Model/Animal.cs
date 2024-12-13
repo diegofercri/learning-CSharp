@@ -29,7 +29,7 @@ namespace SafariApp_v2.Model
 
         // Methods
         /// <summary>
-        /// Handles the animal's behavior during its turn, including reproduction, finding food, and movement.
+        /// Handles the animal's behavior during its turn (day or night) including reproduction, finding food, and movement.
         /// </summary>
         /// <param name="currentRow">The current row of the animal.</param>
         /// <param name="currentCol">The current column of the animal.</param>
@@ -44,46 +44,58 @@ namespace SafariApp_v2.Model
 
             turnsAlive++;
 
-            // Determines the types of allowed food.
-            List<Type> foodTypes = GetFoodTypes();
-            List<(int, int)> foodPositions = new List<(int, int)>();
-
-            // Search for each type of food and aggregate their positions.
-            foreach (var foodType in foodTypes)
-            {
-                foodPositions.AddRange(GetAdjacentPositionsOfType(foodType, currentRow, currentCol, safari));
-            }
-
-            // Select a random position from the list of food positions
-            (int, int)? targetPosition = SelectRandomOrSinglePosition(foodPositions, safari);
-
-            // Move to the food if found or handle hunger/death
-            if (targetPosition.HasValue)
-            {
-                (int foodRow, int foodCol) = targetPosition.Value;
-
-                // Call Death on the Being eaten
-                Being food = safari.GetBeing(foodRow, foodCol);
-                if (food != null)
-                {
-                    food.Death(foodRow, foodCol, safari);
-                }
-
-                // Move to the food's position and reset hunger
-                MoveToPosition(currentRow, currentCol, foodRow, foodCol, safari);
-                turnsWithoutFood = 0; // Reset hunger after eating
-            }
-            else
+            /* Examen 3 */
+            if (safari.GetTurn() % 3 == 0)
             {
                 turnsWithoutFood++; // Increment the hunger counter
-                // If no food is found, the animal may starve to death if it hasn't eaten in enough turns
                 if (turnsWithoutFood == turnsWithoutFoodToDeath)
                 {
                     Death(currentRow, currentCol, safari); // The animal dies due to starvation
                 }
+            }
+            else
+            {
+                // Determines the types of allowed food.
+                List<Type> foodTypes = GetFoodTypes();
+                List<(int, int)> foodPositions = new List<(int, int)>();
+
+                // Search for each type of food and aggregate their positions.
+                foreach (var foodType in foodTypes)
+                {
+                    foodPositions.AddRange(GetAdjacentPositionsOfType(foodType, currentRow, currentCol, safari));
+                }
+
+                // Select a random position from the list of food positions
+                (int, int)? targetPosition = SelectRandomOrSinglePosition(foodPositions, safari);
+
+                // Move to the food if found or handle hunger/death
+                if (targetPosition.HasValue)
+                {
+                    (int foodRow, int foodCol) = targetPosition.Value;
+
+                    // Call Death on the Being eaten
+                    Being food = safari.GetBeing(foodRow, foodCol);
+                    if (food != null)
+                    {
+                        food.Death(foodRow, foodCol, safari);
+                    }
+
+                    // Move to the food's position and reset hunger
+                    MoveToPosition(currentRow, currentCol, foodRow, foodCol, safari);
+                    turnsWithoutFood = 0; // Reset hunger after eating
+                }
                 else
                 {
-                    Move(currentRow, currentCol, safari); // Move to a new position
+                    turnsWithoutFood++; // Increment the hunger counter
+                                        // If no food is found, the animal may starve to death if it hasn't eaten in enough turns
+                    if (turnsWithoutFood == turnsWithoutFoodToDeath)
+                    {
+                        Death(currentRow, currentCol, safari); // The animal dies due to starvation
+                    }
+                    else
+                    {
+                        Move(currentRow, currentCol, safari); // Move to a new position
+                    }
                 }
             }
 
