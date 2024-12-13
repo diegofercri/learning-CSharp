@@ -114,7 +114,7 @@ namespace SafariApp_v2.View
                 return; // Ensure thread safety when updating UI elements
             }
 
-            var beings = controller.getBeings();
+            var beings = controller.GetBeings();
 
             beingsGrid.Rows.Clear(); // Clear rows
             beingsGrid.Columns.Clear(); // Clear columns
@@ -164,6 +164,17 @@ namespace SafariApp_v2.View
             elephantStats.Text = $"Elephants: {controller.GetNumElephantsAlive()}";
             plantStats.Text = $"Plants: {controller.GetNumPlantsAlive()}";
             turnStats.Text = $"Turn: {controller.GetTurn()}";
+
+            /* Examen 4 */
+            var beings = controller.GetBeings();
+            if (controller.GetNumLionsAlive() + controller.GetNumGazellesAlive() + controller.GetNumElephantsAlive() + controller.GetNumPlantsAlive() == 0)
+            {
+                MessageBox.Show("End of the World");
+            }
+            else if (controller.GetNumPlantsAlive() == beings.GetLength(0) * beings.GetLength(1))
+            {
+                MessageBox.Show("World of Plants");
+            }
         }
 
         /// <summary>

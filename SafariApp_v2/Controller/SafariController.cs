@@ -29,7 +29,7 @@ namespace SafariApp_v2.Controller
         }
 
         // Getters
-        public string[,] getBeings() => safari.GetBeingsToString();
+        public string[,] GetBeings() => safari.GetBeingsToString();
         public int GetNumPlantsAlive() => safari.GetNumPlantsAlive();
         public int GetNumGazellesAlive() => safari.GetNumGazellesAlive();
         /* Examen 1 */
@@ -45,7 +45,8 @@ namespace SafariApp_v2.Controller
             cancellationTokenSource = new CancellationTokenSource(); // Initialize the cancellation token
             autoPlayTask = Task.Run(async () =>
             {
-                while (!cancellationTokenSource.Token.IsCancellationRequested)
+                /* Examen 4 */
+                while (!cancellationTokenSource.Token.IsCancellationRequested && !(GetNumLionsAlive() + GetNumGazellesAlive() + GetNumElephantsAlive() + GetNumPlantsAlive() == 0) && !(GetNumPlantsAlive() == GetBeings().GetLength(0) * GetBeings().GetLength(1)))
                 {
                     safari.PlayTurn(); // Call the PlayTurn
                     ModelUpdated?.Invoke(); // Notify views that the model has been updated
@@ -64,11 +65,12 @@ namespace SafariApp_v2.Controller
             cancellationTokenSource = new CancellationTokenSource(); // Initialize the cancellation token
             autoPlayTask = Task.Run(async () =>
             {
-                while (turns < 10)
+                /* Examen 4 */
+                while ((turns < 10) && !(GetNumLionsAlive() + GetNumGazellesAlive() + GetNumElephantsAlive() + GetNumPlantsAlive() == 0) && !(GetNumPlantsAlive() == GetBeings().GetLength(0) * GetBeings().GetLength(1)))
                 {
                     safari.PlayTurn(); // Call the PlayTurn
                     turns++;
-                    await Task.Delay(10); // Wait 0.01 second between turns
+                    await Task.Delay(50); // Wait 0.1 second between turns
                 }
                 ModelUpdated?.Invoke(); // Notify views that the model has been updated
             }, cancellationTokenSource.Token);

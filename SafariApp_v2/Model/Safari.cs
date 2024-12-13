@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 namespace SafariApp_v2.Model
 {
     internal class Safari
@@ -333,6 +334,8 @@ namespace SafariApp_v2.Model
             // Restarts stats
             numPlantsAlive = 0;
             numGazellesAlive = 0;
+            /* Examen 1 */
+            numElephantsAlive = 0;
             numLionsAlive = 0;
 
             // Count beings in activeBeings by type
