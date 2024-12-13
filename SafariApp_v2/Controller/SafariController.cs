@@ -54,6 +54,26 @@ namespace SafariApp_v2.Controller
             }, cancellationTokenSource.Token);
         }
 
+        /* Examen 2 */
+        ///<summary>
+        /// Starts the auto-play process for 10 turns by invoking Safari's AutoPlay method on a separate thread.
+        /// </summary>
+        public void play10()
+        {
+            int turns = 0;
+            cancellationTokenSource = new CancellationTokenSource(); // Initialize the cancellation token
+            autoPlayTask = Task.Run(async () =>
+            {
+                while (turns < 10)
+                {
+                    safari.PlayTurn(); // Call the PlayTurn
+                    turns++;
+                    await Task.Delay(10); // Wait 0.01 second between turns
+                }
+                ModelUpdated?.Invoke(); // Notify views that the model has been updated
+            }, cancellationTokenSource.Token);
+        }
+
         ///<summary>
         /// Stops the auto-play process by cancelling the token.
         /// </summary>

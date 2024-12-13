@@ -205,5 +205,16 @@ namespace SafariApp_v2.View
         {
             controller.resetSafari(); // Call the controller to reset the safari simulation
         }
+
+        /* Examen 2 */
+        /// <summary>
+        /// Handles the Play 10 button click event.
+        /// </summary>
+        /// <param name="sender">The object that raised the event (Button)</param>
+        /// <param name="e">Event arguments for the click event</param>
+        private void play10Button_Click(object sender, EventArgs e)
+        {
+            controller.play10(); // Call the controller to auto play 10 turns the safari
+        }
     }
 }

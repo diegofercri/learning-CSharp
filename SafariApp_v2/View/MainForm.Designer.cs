@@ -43,13 +43,13 @@ namespace SafariApp_v2.View
             this.playButton = new System.Windows.Forms.Button();
             this.statsPanel = new System.Windows.Forms.Panel();
             this.statsContainer = new System.Windows.Forms.GroupBox();
+            this.elephantStats = new System.Windows.Forms.Label();
             this.turnStats = new System.Windows.Forms.Label();
             this.plantStats = new System.Windows.Forms.Label();
             this.gazellesStats = new System.Windows.Forms.Label();
             this.lionStats = new System.Windows.Forms.Label();
             this.safariPanel = new System.Windows.Forms.Panel();
-            /* Examen 1 */
-            this.elephantStats = new System.Windows.Forms.Label();
+            this.play10Button = new System.Windows.Forms.Button();
             this.safariMenu.SuspendLayout();
             this.statsPanel.SuspendLayout();
             this.statsContainer.SuspendLayout();
@@ -130,7 +130,7 @@ namespace SafariApp_v2.View
             // 
             // stepButton
             // 
-            this.stepButton.Location = new System.Drawing.Point(231, 117);
+            this.stepButton.Location = new System.Drawing.Point(338, 117);
             this.stepButton.Margin = new System.Windows.Forms.Padding(7, 6, 7, 6);
             this.stepButton.Name = "stepButton";
             this.stepButton.Size = new System.Drawing.Size(93, 25);
@@ -141,7 +141,7 @@ namespace SafariApp_v2.View
             // 
             // resetButton
             // 
-            this.resetButton.Location = new System.Drawing.Point(337, 117);
+            this.resetButton.Location = new System.Drawing.Point(445, 117);
             this.resetButton.Margin = new System.Windows.Forms.Padding(7, 6, 7, 6);
             this.resetButton.Name = "resetButton";
             this.resetButton.Size = new System.Drawing.Size(93, 25);
@@ -183,7 +183,6 @@ namespace SafariApp_v2.View
             // 
             // statsContainer
             // 
-            /* Examen 1 */
             this.statsContainer.Controls.Add(this.elephantStats);
             this.statsContainer.Controls.Add(this.turnStats);
             this.statsContainer.Controls.Add(this.plantStats);
@@ -198,6 +197,15 @@ namespace SafariApp_v2.View
             this.statsContainer.TabIndex = 0;
             this.statsContainer.TabStop = false;
             this.statsContainer.Text = "Stats:";
+            // 
+            // elephantStats
+            // 
+            this.elephantStats.AutoSize = true;
+            this.elephantStats.Location = new System.Drawing.Point(240, 28);
+            this.elephantStats.Name = "elephantStats";
+            this.elephantStats.Size = new System.Drawing.Size(70, 16);
+            this.elephantStats.TabIndex = 4;
+            this.elephantStats.Text = "Elephants:";
             // 
             // turnStats
             // 
@@ -242,24 +250,26 @@ namespace SafariApp_v2.View
             this.safariPanel.Name = "safariPanel";
             this.safariPanel.Size = new System.Drawing.Size(920, 556);
             this.safariPanel.TabIndex = 6;
-            /* Examen 1 */
             // 
-            // elephantStats
+            // play10Button
             // 
-            this.elephantStats.AutoSize = true;
-            this.elephantStats.Location = new System.Drawing.Point(240, 28);
-            this.elephantStats.Name = "elephantStats";
-            this.elephantStats.Size = new System.Drawing.Size(70, 16);
-            this.elephantStats.TabIndex = 4;
-            this.elephantStats.Text = "Elephants:";
+            this.play10Button.Location = new System.Drawing.Point(231, 117);
+            this.play10Button.Margin = new System.Windows.Forms.Padding(7, 6, 7, 6);
+            this.play10Button.Name = "play10Button";
+            this.play10Button.Size = new System.Drawing.Size(93, 25);
+            this.play10Button.TabIndex = 7;
+            this.play10Button.Text = "PLAY 10";
+            this.play10Button.UseVisualStyleBackColor = true;
+            this.play10Button.Click += new System.EventHandler(this.play10Button_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(944, 720);
-            this.Controls.Add(this.stopButton);
             this.Controls.Add(this.stepButton);
+            this.Controls.Add(this.play10Button);
+            this.Controls.Add(this.stopButton);
             this.Controls.Add(this.statsPanel);
             this.Controls.Add(this.resetButton);
             this.Controls.Add(this.safariMenu);
@@ -302,5 +312,6 @@ namespace SafariApp_v2.View
         private Label turnStats;
         /* Examen 1 */
         private Label elephantStats;
+        private Button play10Button;
     }
 }
