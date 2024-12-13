@@ -7,10 +7,12 @@ namespace SafariApp_v2.Model
         // Variables
         private int numPlants;
         private int numGazelles;
+        private int numElephants; /* Examen 1 */
         private int numLions;
         
         private int numPlantsAlive;
         private int numGazellesAlive;
+        private int numElephantsAlive; /* Examen 1 */
         private int numLionsAlive;
 
         private int turn;
@@ -28,8 +30,9 @@ namespace SafariApp_v2.Model
         ///<param name="cols">Number of columns in the safari grid.</param>
         ///<param name="numPlants">Number of plants to be placed in the safari.</param>
         ///<param name="numGazelles">Number of gazelles to be placed in the safari.</param>
+        ///<param name="numElephants">Number of elephants to be placed in the safari.</param>
         ///<param name="numLions">Number of lions to be placed in the safari.</param>
-        public Safari(int rows, int cols, int numPlants, int numGazelles, int numLions)
+        public Safari(int rows, int cols, int numPlants, int numGazelles, int numElephants /* Examen 1 */, int numLions)
         {
             if (rows <= 0 || cols <= 0)
             {
@@ -44,10 +47,12 @@ namespace SafariApp_v2.Model
 
             this.numPlants = numPlants;
             this.numGazelles = numGazelles;
+            this.numElephants = numElephants; /* Examen 1 */
             this.numLions = numLions;
 
             numPlantsAlive = numPlants;
             numGazellesAlive = numGazelles;
+            numElephantsAlive = numElephants; /* Examen 1 */
             numLionsAlive = numLions;
 
             turn = 0;
@@ -63,6 +68,7 @@ namespace SafariApp_v2.Model
         // Getters and Setters
         public int GetNumPlantsAlive() { return numPlantsAlive; }
         public int GetNumGazellesAlive() { return numGazellesAlive; }
+        public int GetNumElephantsAlive() { return numElephantsAlive; } /* Examen 1 */
         public int GetNumLionsAlive() { return numLionsAlive; }
         public int GetTurn() { return turn; }
         public Being[,] GetBeings() { return beings; }
@@ -249,8 +255,17 @@ namespace SafariApp_v2.Model
                 beings[row, col] = new Gazelle(turn); // Create and place a Gazelle
             }
 
+            /* Examen 1 */
+            // Place the elephants
+            for (int i = numPlants + numGazelles; i < numPlants + numGazelles + numElephants; i++)
+            {
+                (int row, int col) = allPositions[i];
+                beings[row, col] = new Elephant(turn); // Create and place a Elephant
+            }
+
+            /* Examen 1 */
             // Place the lions
-            for (int i = numPlants + numGazelles; i < numPlants + numGazelles + numLions; i++)
+            for (int i = numPlants + numGazelles + numElephants; i < numPlants + numGazelles + numElephants + numLions; i++)
             {
                 (int row, int col) = allPositions[i];
                 beings[row, col] = new Lion(turn); // Create and place a Lion
@@ -325,6 +340,8 @@ namespace SafariApp_v2.Model
             {
                 if (being is Plant) { numPlantsAlive++; }
                 else if (being is Gazelle) { numGazellesAlive++; }
+                /* Examen 1 */
+                else if (being is Elephant) { numElephantsAlive++; }
                 else if (being is Lion) { numLionsAlive++; }
             }
         }
@@ -346,6 +363,8 @@ namespace SafariApp_v2.Model
             // Restarts stats
             numPlantsAlive = numPlants;
             numGazellesAlive = numGazelles;
+            /* Examen 1 */
+            numElephantsAlive = numElephants;
             numLionsAlive = numLions;
             turn = 0;
 

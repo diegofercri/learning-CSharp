@@ -13,7 +13,7 @@ namespace SafariApp_v2.Model
         /// <returns>A list containing Herbivorous.</returns>
         protected override List<Type> GetFoodTypes()
         {
-            return new List<Type> { typeof(Gazelle) };
+            return new List<Type> { typeof(Gazelle), typeof(Elephant) /* Examen 1 */ };
         }
     }
 }

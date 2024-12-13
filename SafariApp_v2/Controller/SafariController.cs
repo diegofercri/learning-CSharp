@@ -32,6 +32,8 @@ namespace SafariApp_v2.Controller
         public string[,] getBeings() => safari.GetBeingsToString();
         public int GetNumPlantsAlive() => safari.GetNumPlantsAlive();
         public int GetNumGazellesAlive() => safari.GetNumGazellesAlive();
+        /* Examen 1 */
+        public int GetNumElephantsAlive() => safari.GetNumElephantsAlive();
         public int GetNumLionsAlive() => safari.GetNumLionsAlive();
         public int GetTurn() => safari.GetTurn();
 

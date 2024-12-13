@@ -50,6 +50,7 @@
     <Compile Include="Model\Animal.cs" />
     <Compile Include="Model\Being.cs" />
     <Compile Include="Model\Carnivorous.cs" />
+    <Compile Include="Model\Elephant.cs" />
     <Compile Include="Model\Gazelle.cs" />
     <Compile Include="Model\Herbivorous.cs" />
     <Compile Include="Model\Lion.cs" />

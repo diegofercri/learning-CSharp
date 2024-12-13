@@ -90,6 +90,12 @@ namespace SafariApp_v2.View
                 e.CellStyle.BackColor = Color.Brown;
                 e.CellStyle.ForeColor = Color.White;
             }
+            /* Examen 1 */
+            else if (cellValue == "Elephant")
+            {
+                e.CellStyle.BackColor = Color.Gray;
+                e.CellStyle.ForeColor = Color.White;
+            }
             else if (cellValue == "Lion")
             {
                 e.CellStyle.BackColor = Color.Red;
@@ -154,6 +160,8 @@ namespace SafariApp_v2.View
             // Update the stats labels
             lionStats.Text = $"Lions: {controller.GetNumLionsAlive()}";
             gazellesStats.Text = $"Gazelles: {controller.GetNumGazellesAlive()}";
+            /* Examen 1 */
+            elephantStats.Text = $"Elephants: {controller.GetNumElephantsAlive()}";
             plantStats.Text = $"Plants: {controller.GetNumPlantsAlive()}";
             turnStats.Text = $"Turn: {controller.GetTurn()}";
         }
