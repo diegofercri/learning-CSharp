@@ -1,7 +1,7 @@
-﻿<Application x:Class="WPFBasics.App"
+﻿<Application x:Class="WPFnba.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:WPFBasics"
+             xmlns:local="clr-namespace:WPFnba"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
          

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WPFBasics.Properties
+namespace WPFnba.Properties
 {
 
 
