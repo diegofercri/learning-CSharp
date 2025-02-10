@@ -35,18 +35,21 @@ namespace WPFnba
 
         private void showTeams()
         {
-            string query = "SELECT * FROM Team";
-
-            SqlDataAdapter adapter = new SqlDataAdapter(query, connection);
-
-            using (adapter)
+            try
             {
-                DataTable teamTable = new DataTable();
-                adapter.Fill(teamTable);
+                string query = "SELECT id, name, conference, teamLogoUrl FROM team";
+                SqlDataAdapter adapter = new SqlDataAdapter(query, connection);
+                using (adapter)
+                {
+                    DataTable teamTable = new DataTable();
+                    adapter.Fill(teamTable);
 
-                listTeams.ItemsSource = teamTable.DefaultView;
-                listTeams.SelectedValuePath = "teamId";
-                listTeams.DisplayMemberPath = "teamName";
+                    listTeams.ItemsSource = teamTable.DefaultView;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ocurrió un error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }
