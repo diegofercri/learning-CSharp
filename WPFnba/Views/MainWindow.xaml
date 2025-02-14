@@ -1,0 +1,286 @@
+﻿<Window x:Class="WPFnba.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPFnba.View"
+        mc:Ignorable="d"
+        Title="NBA App" Height="710" Width="700" WindowStartupLocation="CenterScreen" KeyDown="Window_KeyDown">
+    <StackPanel Name="mainPanel">
+        
+        <DockPanel Name="menuPanel" LastChildFill="False">
+            <Menu DockPanel.Dock="Top">
+                <!-- File Menu -->
+                <MenuItem Header="File">
+                    <MenuItem Header="Add" InputGestureText="Ctrl + A" Click="Add_Event">
+                        <MenuItem.Icon>
+                            <Image Source="/Images/Add.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator/>
+                    <MenuItem Header="Exit" InputGestureText="Ctrl + Q" Click="Exit_Event">
+                        <MenuItem.Icon>
+                            <Image Source="/Images/Exit.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                
+                <!-- Edit Menu -->
+                <MenuItem Header="Edit">
+                    <MenuItem Header="Edit" InputGestureText="Ctrl + E" Click="Edit_Event">
+                        <MenuItem.Icon>
+                            <Image Source="/Images/Edit.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator/>
+                    <MenuItem Header="Delete" InputGestureText="Ctrl + X" Click="Delete_Event">
+                        <MenuItem.Icon>
+                            <Image Source="/Images/Delete.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                
+                <!-- Help Menu -->
+                <MenuItem Header="Help">
+                    <MenuItem Header="Help" InputGestureText="Ctrl + H" Click="Help_Event">
+                        <MenuItem.Icon>
+                            <Image Source="/Images/Help.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator/>
+                    <MenuItem Header="Info" InputGestureText="Ctrl + I" Click="Info_Event">
+                        <MenuItem.Icon>
+                            <Image Source="/Images/Info.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                
+            </Menu>
+            <ToolBarTray DockPanel.Dock="Top">
+                <ToolBar>
+                    <!-- Add Button -->
+                    <Button ToolTip="Add" Name="Add_Button" Click="Add_Event">
+                        <Image Source="/Images/Add.png" Width="18" Height="18"/>
+                    </Button>
+                    <!-- Edit Button -->
+                    <Button ToolTip="Edit" Name="Edit_Button" Click="Edit_Event">
+                        <Image Source="/Images/Edit.png" Width="18" Height="18"/>
+                    </Button>
+                    <!-- Delete Button -->
+                    <Button ToolTip="Delete" Name="Delete_Button" Click="Delete_Event">
+                        <Image Source="/Images/Delete.png" Width="18" Height="18"/>
+                    </Button>
+                    <Separator/>
+                    <!-- Help Button -->
+                    <Button ToolTip="Help" Name="Help_Button" Click="Help_Event">
+                        <Image Source="/Images/Help.png" Width="18" Height="18"/>
+                    </Button>
+                    <!-- Info Button -->
+                    <Button ToolTip="Info" Name="Info_Button" Click="Info_Event">
+                        <Image Source="/Images/Info.png" Width="18" Height="18"/>
+                    </Button>
+                    <Separator/>
+                    <!-- Exit Button -->
+                    <Button ToolTip="Exit" Name="Exit_Button" Click="Exit_Event">
+                        <Image Source="/Images/Exit.png" Width="18" Height="18"/>
+                    </Button>
+                </ToolBar>
+            </ToolBarTray>
+        </DockPanel>
+
+        <Grid>
+
+            <TabControl x:Name="TabControl" BorderThickness="0">
+                <!-- Teams Page -->
+                <TabItem Header="Teams">
+                    <StackPanel>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Page Title -->
+                            <Label Content="NBA Teams" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" FontSize="24" FontWeight="Bold" Margin="0,20,0,0"/>
+
+                            <!-- Team Logo -->
+                            <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,40,0,0">
+                                <Image x:Name="TeamLogo" Stretch="Fill" Width="150" Height="150" />
+                            </StackPanel>
+
+                            <!-- Teams List -->
+                            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,40,0,0">
+                                <ListBox Name="TeamsList" SelectionChanged="TeamsList_SelectionChanged" Height="200" Width="500" BorderThickness="0" HorizontalContentAlignment="Center"/>
+                            </StackPanel>
+
+
+                            <!-- Buttons -->
+                            <StackPanel Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" Margin="0,40,0,0">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto" />
+                                        <ColumnDefinition Width="auto" />
+                                        <ColumnDefinition Width="auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Button Name="AddTeam_Button" Content="Add Team" Click="Add_Event" Padding="24, 8" BorderThickness="0" FontSize="13" FontWeight="Medium" Margin="10, 0" Width="150" Grid.Row="0" Grid.Column="0" />
+                                    <Button Name="EditTeam_Button" Content="Edit Team" Click="Edit_Event" Padding="24, 8" BorderThickness="0" FontSize="13" FontWeight="Medium" Margin="10, 0" Width="150" Grid.Row="0" Grid.Column="1" />
+                                    <Button Name="DeleteTeam_Button" Content="Delete Team" Click="Delete_Event" Padding="24, 8" BorderThickness="0" FontSize="13" FontWeight="Medium" Margin="10, 0" Width="150" Grid.Row="0" Grid.Column="2" />
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </TabItem>
+
+                <!-- Team Players Page -->
+                <TabItem Header="Team Players">
+                    <StackPanel>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Page Title -->
+                            <Label Content="Team Players" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" FontSize="24" FontWeight="Bold" Margin="0,20,0,0"/>
+
+                            <!-- Player Image -->
+                            <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,40,0,0">
+                                <Image x:Name="PlayerPhoto" Stretch="Fill" Width="150" Height="150" />
+                            </StackPanel>
+
+                            <!-- Team Player List -->
+                            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,40,0,0">
+                                <ListBox Name="TeamPlayersList" SelectionChanged="TeamPlayersList_SelectionChanged" Height="200" Width="500" BorderThickness="0" HorizontalContentAlignment="Center"/>
+                            </StackPanel>
+
+                            <!-- Buttons -->
+                            <StackPanel Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" Margin="0,40,0,0">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto" />
+                                        <ColumnDefinition Width="auto" />
+                                        <ColumnDefinition Width="auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Button Name="AddPlayer_Button" Content="Add Player" Click="Add_Event" Padding="24, 8" BorderThickness="0" FontSize="13" FontWeight="Medium" Margin="10, 0" Width="150" Grid.Row="0" Grid.Column="0" />
+                                    <Button Name="EditPlayer_Button" Content="Edit Player" Click="Edit_Event" Padding="24, 8" BorderThickness="0" FontSize="13" FontWeight="Medium" Margin="10, 0" Width="150" Grid.Row="0" Grid.Column="1" />
+                                    <Button Name="DeletePlayer_Button" Content="Delete Player" Click="Delete_Event" Padding="24, 8" BorderThickness="0" FontSize="13" FontWeight="Medium" Margin="10, 0" Width="150" Grid.Row="0" Grid.Column="2" />
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </TabItem>
+
+                <!-- Player Page -->
+                <TabItem Header="Player">
+                    <StackPanel>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Page Title -->
+                            <Label Content="Team Players" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" FontSize="24" FontWeight="Bold" Margin="0,10,0,0"/>
+
+                            <!-- Player Image -->
+                            <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,0">
+                                <Image x:Name="PlayerPhoto2" Stretch="Fill" Width="150" Height="150" />
+                            </StackPanel>
+
+                            <!-- Player Data -->
+                            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <!-- 1st Row -->
+                                        <RowDefinition Height="auto" />
+                                        <!-- 2nd Row -->
+                                        <RowDefinition Height="auto" />
+                                    </Grid.RowDefinitions>
+
+                                    <!-- Player Data -->
+                                    <DataGrid Name="PlayerDataTable" Grid.Row="0" AutoGenerateColumns="False" HeadersVisibility="Column" HorizontalAlignment="Center" VerticalAlignment="Top" Height="auto" Width="auto" IsReadOnly="True" Margin="0,0,0,0">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" />
+                                            <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" />
+                                            <DataGridTextColumn Header="Team" Binding="{Binding Team}" />
+                                            <DataGridTextColumn Header="Position" Binding="{Binding Position}" />
+                                            <DataGridTextColumn Header="Jersey Number" Binding="{Binding JerseyNumber}" />
+                                            <DataGridTextColumn Header="Age" Binding="{Binding Age}" />
+                                            <DataGridTextColumn Header="Date of Birth" Binding="{Binding DateOfBirth}" />
+                                            <DataGridTextColumn Header="Height" Binding="{Binding Height}" />
+                                            <DataGridTextColumn Header="Weight" Binding="{Binding Weight}" />
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+
+                                    <!-- Player Stats -->
+                                    <DataGrid Name="PlayerStatsTable" Grid.Row="1" AutoGenerateColumns="False" HeadersVisibility="Column" HorizontalAlignment="Center" VerticalAlignment="Top" Height="auto" Width="auto" IsReadOnly="True" Margin="0,20,0,20">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="Points" Binding="{Binding CareerPoints}" />
+                                            <DataGridTextColumn Header="Blocks" Binding="{Binding CareerBlocks}" />
+                                            <DataGridTextColumn Header="Assists" Binding="{Binding CareerAssists}" />
+                                            <DataGridTextColumn Header="Rebounds" Binding="{Binding CareerRebounds}" />
+                                            <DataGridTextColumn Header="Turnovers" Binding="{Binding CareerTurnovers}" />
+                                            <DataGridTextColumn Header="Three (%)" Binding="{Binding CareerPercentageThree}" />
+                                            <DataGridTextColumn Header="Freethrow (%)" Binding="{Binding CareerPercentageFreethrow}" />
+                                            <DataGridTextColumn Header="Field Goal (%)" Binding="{Binding CareerPercentageFieldGoal}" />
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+
+                                </Grid>
+                            </StackPanel>
+
+                            <!-- Buttons -->
+                            <StackPanel Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" Margin="0,20,0,20">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto" />
+                                        <ColumnDefinition Width="auto" />
+                                        <ColumnDefinition Width="auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Button Name="AddPlayer2_Button" Content="Add Player" Click="Add_Event" Padding="24, 8" BorderThickness="0" FontSize="13" FontWeight="Medium" Margin="10, 0" Width="150" Grid.Row="0" Grid.Column="0" />
+                                    <Button Name="EditPlayer2_Button" Content="Edit Player" Click="Edit_Event" Padding="24, 8" BorderThickness="0" FontSize="13" FontWeight="Medium" Margin="10, 0" Width="150" Grid.Row="0" Grid.Column="1" />
+                                    <Button Name="DeletePlayer2_Button" Content="Delete Player" Click="Delete_Event" Padding="24, 8" BorderThickness="0" FontSize="13" FontWeight="Medium" Margin="10, 0" Width="150" Grid.Row="0" Grid.Column="2" />
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </TabItem>
+
+            </TabControl>
+            
+        </Grid>
+    </StackPanel>
+</Window>
