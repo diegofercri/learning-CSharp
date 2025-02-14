@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Data.Linq;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
-using System;
-
-using WPFnba;
+using System.Data.Linq;
 using System.Linq;
+using WPFnba;
 
 /// <summary>
 /// Repository class for handling CRUD operations on the Player entity.
@@ -23,23 +22,23 @@ public class PlayerRepository
     public PlayerRepository()
     {
         dataContext = Database.GetContext();
-        player_dt = new DataTable();
-        teamPlayers_dt = new DataTable();
-        playerData_dt = new DataTable();
-        playerStats_dt = new DataTable();
+        DataTable player_dt = new DataTable();
+        DataTable teamPlayers_dt = new DataTable();
+        DataTable playerData_dt = new DataTable();
+        DataTable playerStats_dt = new DataTable();
     }
 
     /// <summary>
     /// Inserts a new player into the database.
     /// </summary>
     /// <param name="playerData">A list of strings containing player data.</param>
-    /// <returns>True if the player was successfully inserted; otherwise, false.</returns>
     public bool InsertPlayer(List<string> playerData)
     {
         if (playerData == null || playerData.Count < 19)
         {
             throw new ArgumentException("Invalid player data provided.");
         }
+
         try
         {
             player player = new player();
@@ -109,6 +108,7 @@ public class PlayerRepository
                         break;
                 }
             }
+
             player playerSearch = dataContext.GetTable<player>().First(p => p.id == player.id);
             foreach (var prop in player.GetType().GetProperties())
             {
@@ -117,6 +117,7 @@ public class PlayerRepository
                     prop.SetValue(playerSearch, prop.GetValue(player));
                 }
             }
+
             dataContext.GetTable<player>().InsertOnSubmit(player);
             dataContext.SubmitChanges();
             return true;
@@ -132,15 +133,16 @@ public class PlayerRepository
     /// Updates an existing player in the database.
     /// </summary>
     /// <param name="playerData">A list of strings containing updated player data.</param>
-    /// <returns>True if the player was successfully updated; otherwise, false.</returns>
     public bool UpdatePlayer(List<string> playerData)
     {
         if (playerData == null || playerData.Count < 19)
         {
             throw new ArgumentException("Invalid player data provided.");
         }
+
         try
         {
+
             player player = new player();
             for (int i = 0; i < playerData.Count; i++)
             {
@@ -208,6 +210,7 @@ public class PlayerRepository
                         break;
                 }
             }
+
             player playerSearch = dataContext.GetTable<player>().First(p => p.id == player.id);
             foreach (var prop in player.GetType().GetProperties())
             {
@@ -216,6 +219,7 @@ public class PlayerRepository
                     prop.SetValue(playerSearch, prop.GetValue(player));
                 }
             }
+
             dataContext.SubmitChanges();
             return true;
         }
@@ -230,7 +234,6 @@ public class PlayerRepository
     /// Deletes a player from the database.
     /// </summary>
     /// <param name="id">The ID of the player to delete.</param>
-    /// <returns>True if the player was successfully deleted; otherwise, false.</returns>
     public bool DeletePlayer(int id)
     {
         try
@@ -251,11 +254,10 @@ public class PlayerRepository
     /// Retrieves a player by their unique ID.
     /// </summary>
     /// <param name="id">The ID of the player to retrieve.</param>
-    /// <returns>A DataTable containing the player's information if found; otherwise, null.</returns>
+    /// <returns>The player object if found; otherwise, null.</returns>
     internal DataTable GetPlayer(int id)
     {
-        try
-        {
+        try {
             // Search for the player by ID
             player player = dataContext.GetTable<player>().First(p => p.id == id);
 
@@ -292,27 +294,28 @@ public class PlayerRepository
 
             // Convert the player to a DataTable
             player_dt.Rows.Add(
-                player.id,
-                player.firstName,
-                player.lastName,
-                player.team,
-                player.position,
-                player.dateOfBirth,
-                player.height,
-                player.weight,
-                player.jerseyNumber,
-                player.age,
-                player.careerPoints,
-                player.careerBlocks,
-                player.careerAssists,
-                player.careerRebounds,
-                player.careerTurnovers,
-                player.careerPercentageThree,
-                player.careerPercentageFreethrow,
-                player.careerPercentageFieldGoal,
-                player.headShotUrl,
-                player.dateLastUpdated
+                    player.id,
+                    player.firstName,
+                    player.lastName,
+                    player.team,
+                    player.position,
+                    player.dateOfBirth,
+                    player.height,
+                    player.weight,
+                    player.jerseyNumber,
+                    player.age,
+                    player.careerPoints,
+                    player.careerBlocks,
+                    player.careerAssists,
+                    player.careerRebounds,
+                    player.careerTurnovers,
+                    player.careerPercentageThree,
+                    player.careerPercentageFreethrow,
+                    player.careerPercentageFieldGoal,
+                    player.headShotUrl,
+                    player.dateLastUpdated
             );
+
             return player_dt;
         }
         catch (Exception e)
@@ -321,11 +324,12 @@ public class PlayerRepository
         }
     }
 
+
     /// <summary>
     /// Retrieves player data by their unique ID.
     /// </summary>
     /// <param name="id">The ID of the player to retrieve.</param>
-    /// <returns>A DataTable containing the player's basic data if found; otherwise, null.</returns>
+    /// <returns>The player data object if found; otherwise, null.</returns>
     internal DataTable GetPlayerData(int id)
     {
         try
@@ -356,17 +360,18 @@ public class PlayerRepository
 
             // Convert the player to a DataTable
             playerData_dt.Rows.Add(
-                player.id,
-                player.firstName,
-                player.lastName,
-                player.team,
-                player.position,
-                player.dateOfBirth,
-                player.height,
-                player.weight,
-                player.jerseyNumber,
-                player.age
+                    player.id,
+                    player.firstName,
+                    player.lastName,
+                    player.team,
+                    player.position,
+                    player.dateOfBirth,
+                    player.height,
+                    player.weight,
+                    player.jerseyNumber,
+                    player.age
             );
+
             return playerData_dt;
         }
         catch (Exception e)
@@ -375,11 +380,12 @@ public class PlayerRepository
         }
     }
 
+
     /// <summary>
-    /// Retrieves player stats by their unique ID.
+    /// Retrieves a player stats by their unique ID.
     /// </summary>
     /// <param name="id">The ID of the player to retrieve.</param>
-    /// <returns>A DataTable containing the player's stats if found; otherwise, null.</returns>
+    /// <returns>The player stats object if found; otherwise, null.</returns>
     internal DataTable GetPlayerStats(int id)
     {
         try
@@ -408,15 +414,16 @@ public class PlayerRepository
 
             // Convert the player to a DataTable
             playerStats_dt.Rows.Add(
-                player.careerPoints,
-                player.careerBlocks,
-                player.careerAssists,
-                player.careerRebounds,
-                player.careerTurnovers,
-                player.careerPercentageThree,
-                player.careerPercentageFreethrow,
-                player.careerPercentageFieldGoal
+                    player.careerPoints,
+                    player.careerBlocks,
+                    player.careerAssists,
+                    player.careerRebounds,
+                    player.careerTurnovers,
+                    player.careerPercentageThree,
+                    player.careerPercentageFreethrow,
+                    player.careerPercentageFieldGoal
             );
+
             return playerStats_dt;
         }
         catch (Exception e)
@@ -426,9 +433,9 @@ public class PlayerRepository
     }
 
     /// <summary>
-    /// Retrieves all players belonging to a specific team by team ID.
+    /// Retrieves all players belonging to a specific team by team name.
     /// </summary>
-    /// <param name="teamId">The ID of the team.</param>
+    /// <param name="teamName">The name of the team.</param>
     /// <returns>A DataTable containing all players from the specified team.</returns>
     internal DataTable GetPlayersByTeam(int teamId)
     {
@@ -513,15 +520,15 @@ public class PlayerRepository
     }
 
     /// <summary>
-    /// Gets the maximum ID from the players table.
+    /// Obtiene el ID máximo de la tabla de jugadores.
     /// </summary>
     /// <returns>The maximum ID or 0 if no records exist.</returns>
     public int GetNextId()
     {
-        // Get the maximum ID from the database
-        var maxId = dataContext.GetTable<player>().Max(t => t.id);
+        // Obtener el ID máximo de la base de datos
+        var maxId = dataContext.GetTable<team>().Max(t => t.id);
 
-        // Return the next ID
+        // Devolver el siguiente ID
         return maxId + 1;
     }
 }

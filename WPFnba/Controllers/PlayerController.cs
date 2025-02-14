@@ -1,6 +1,5 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-
 using System.Data;
 
 /// <summary>
@@ -50,7 +49,7 @@ public class PlayerController
     /// <param name="playerData">A list of strings containing updated player data.</param>
     internal bool UpdatePlayer(List<string> playerData)
     {
-        // Call the repository method to update the player
+        // Llamar al método del repositorio para actualizar el jugador
         return playerRepository.UpdatePlayer(playerData);
     }
 
@@ -94,10 +93,10 @@ public class PlayerController
     }
 
     /// <summary>
-    /// Retrieves all players belonging to a specific team by team ID.
+    /// Retrieves all players belonging to a specific team by team name.
     /// </summary>
-    /// <param name="teamId">The ID of the team.</param>
-    /// <returns>A DataTable containing players belonging to the specified team.</returns>
+    /// <param name="teamName">The name of the team.</param>
+    /// <returns>A DataTable players belonging to the specified team.</returns>
     public DataTable GetPlayersByTeam(int teamId)
     {
         return playerRepository.GetPlayersByTeam(teamId);

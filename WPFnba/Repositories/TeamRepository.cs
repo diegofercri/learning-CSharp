@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Data.Linq;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
-using System;
-
-using WPFnba;
+using System.Data.Entity;
+using System.Data.Linq;
 using System.Linq;
+using WPFnba;
 
 /// <summary>
 /// Repository class for handling CRUD operations on the Team entity.
@@ -21,8 +21,8 @@ public class TeamRepository
     public TeamRepository()
     {
         dataContext = Database.GetContext();
-        teams_dt = new DataTable();
-        team_dt = new DataTable();
+        DataTable teams_dt = new DataTable();
+        DataTable team_dt = new DataTable();
     }
 
     /// <summary>
@@ -31,11 +31,12 @@ public class TeamRepository
     /// <param name="teamData">A list of strings containing team data.</param>
     internal bool InsertTeam(List<string> teamData)
     {
-        // Validate that the data is valid
-        if (teamData == null || teamData.Count < 6) // We only need 5 elements without the ID
+        // Validar que los datos sean válidos
+        if (teamData == null || teamData.Count < 6) // Solo necesitamos 5 elementos sin el ID
         {
             throw new ArgumentException("Invalid team data provided.");
         }
+
         try
         {
             team team = new team();
@@ -63,15 +64,17 @@ public class TeamRepository
                         break;
                 }
             }
-            // Add the team to the database
+
+            // Agregar el equipo a la base de datos
             dataContext.GetTable<team>().InsertOnSubmit(team);
             dataContext.SubmitChanges();
-            return true; // Indicates success
+
+            return true; // Indica éxito
         }
         catch (Exception e)
         {
             Console.WriteLine($"Error: {e.Message}");
-            return false; // Indicates failure
+            return false; // Indica fallo
         }
     }
 
@@ -85,6 +88,7 @@ public class TeamRepository
         {
             throw new ArgumentException("Invalid team data provided.");
         }
+
         try
         {
             team team = new team();
@@ -112,6 +116,7 @@ public class TeamRepository
                         break;
                 }
             }
+
             team teamSearch = dataContext.GetTable<team>().First(t => t.id == team.id);
             foreach (var prop in team.GetType().GetProperties())
             {
@@ -120,6 +125,7 @@ public class TeamRepository
                     prop.SetValue(teamSearch, prop.GetValue(team));
                 }
             }
+
             dataContext.SubmitChanges();
             return true;
         }
@@ -188,6 +194,7 @@ public class TeamRepository
                 team.teamLogoUrl,
                 team.dateLastUpdated
             );
+
             return team_dt;
         }
         catch (Exception e)
@@ -204,7 +211,7 @@ public class TeamRepository
     {
         try
         {
-            // Search for teams and order them by conference and name
+            // Search for players belonging to the specified team
             List<team> teams = dataContext.GetTable<team>()
                 .OrderBy(t => t.conference)
                 .ThenBy(t => t.name)
@@ -226,7 +233,7 @@ public class TeamRepository
                 teams_dt.Rows.Clear();
             }
 
-            // Convert the list of teams to a DataTable
+            // Convert the list of players to a DataTable
             foreach (team t in teams)
             {
                 teams_dt.Rows.Add(
@@ -250,15 +257,15 @@ public class TeamRepository
     }
 
     /// <summary>
-    /// Gets the maximum ID from the teams table.
+    /// Obtiene el ID máximo de la tabla de equipos.
     /// </summary>
     /// <returns>The maximum ID or 0 if no records exist.</returns>
     public int GetNextId()
     {
-        // Get the maximum ID from the database
+        // Obtener el ID máximo de la base de datos
         var maxId = dataContext.GetTable<team>().Max(t => t.id);
 
-        // Return the next ID
+        // Devolver el siguiente ID
         return maxId + 1;
     }
 }

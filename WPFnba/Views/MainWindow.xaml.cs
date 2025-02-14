@@ -22,12 +22,15 @@ namespace WPFnba.View
         public MainWindow()
         {
             InitializeComponent();
+
             // Instance repositories
             PlayerRepository playerRepository = new PlayerRepository();
             TeamRepository teamRepository = new TeamRepository();
+
             // Instance controllers
             _playerController = new PlayerController(playerRepository);
             _teamController = new TeamController(teamRepository);
+
             // Load data
             LoadTeams();
         }
@@ -35,11 +38,13 @@ namespace WPFnba.View
         private void LoadTeams()
         {
             teams = _teamController.GetTeams();
+
             if (teams is null)
             {
                 MessageBox.Show("An error has occurred while trying to load teams.");
                 return;
             }
+
             TeamsList.ItemsSource = teams.DefaultView; // Fill the list with the teams
             TeamsList.SelectedValuePath = "Id"; // Field to use as id
             TeamsList.DisplayMemberPath = "Name"; // Field to show in the list
@@ -53,7 +58,7 @@ namespace WPFnba.View
             }
             else
             {
-                MessageBox.Show("There are no teams to show");
+               MessageBox.Show("There are no teams to show");
             }
         }
 
@@ -69,6 +74,7 @@ namespace WPFnba.View
             if (teamRow != null)
             {
                 string logoUrl = teamRow.Field<string>("teamLogoUrl");
+
                 if (!string.IsNullOrEmpty(logoUrl))
                 {
                     try
@@ -108,6 +114,7 @@ namespace WPFnba.View
         private void LoadTeamPlayers(int teamId)
         {
             teamPlayers = _playerController.GetPlayersByTeam(teamId);
+
             if (teamPlayers is null)
             {
                 MessageBox.Show("An error has occurred while trying to load team players.");
@@ -138,6 +145,7 @@ namespace WPFnba.View
             }
         }
 
+
         private void LoadPlayerPhoto(int playerId)
         {
             if (teamPlayers == null)
@@ -150,6 +158,7 @@ namespace WPFnba.View
             if (teamPlayersRow != null)
             {
                 string headShotUrl = teamPlayersRow.Field<string>("headShotUrl");
+
                 if (!string.IsNullOrEmpty(headShotUrl))
                 {
                     try
@@ -189,26 +198,28 @@ namespace WPFnba.View
 
         private void LoadPlayerData(int playerId)
         {
-            // Get the player data from the controller
+            // Obtener los datos del jugador desde el controlador
             DataTable playerData = _playerController.GetPlayerData(playerId);
+
             if (playerData is null || playerData.Rows.Count == 0)
             {
                 MessageBox.Show("An error has occurred while trying to load player data.");
                 return;
             }
 
-            // Bind the player data to the first DataGrid (PlayerDataTable)
+            // Vincular los datos del jugador al primer DataGrid (PlayerDataTable)
             PlayerDataTable.ItemsSource = playerData.DefaultView;
 
-            // Assume you also have a method to get the player stats
+            // Supongamos que también tienes un método para obtener las estadísticas del jugador
             DataTable playerStats = _playerController.GetPlayerStats(playerId);
+
             if (playerStats is null || playerStats.Rows.Count == 0)
             {
                 MessageBox.Show("An error has occurred while trying to load player stats.");
                 return;
             }
 
-            // Bind the player stats to the second DataGrid (PlayerStatsTable)
+            // Vincular las estadísticas del jugador al segundo DataGrid (PlayerStatsTable)
             PlayerStatsTable.ItemsSource = playerStats.DefaultView;
         }
 
@@ -218,22 +229,23 @@ namespace WPFnba.View
             // Get the selected tab
             TabItem selectedTab = TabControl.SelectedItem as TabItem;
             string header = selectedTab.Header.ToString();
-
             // Call the corresponding method depending on the selected tab
             if (header == "Teams")
             {
-                // Open the team add window and pass the current data
+                // Abrir la ventana de actualización del equipo y pasar los datos actuales
                 TeamFormWindow1 addWindow = new TeamFormWindow1(_teamController);
-                addWindow.ShowDialog(); // Show the update window as modal
-                // After updating, reload the team list to reflect the changes
+                addWindow.ShowDialog(); // Mostrar la ventana de actualización como modal
+
+                // Después de actualizar, recargar la lista de equipos para reflejar los cambios
                 this.LoadTeams();
             }
             else
             {
-                // Open the player add window and pass the current data
+                // Abrir la ventana de actualización del equipo y pasar los datos actuales
                 PlayerFormWindow1 addWindow = new PlayerFormWindow1(_playerController);
-                addWindow.ShowDialog(); // Show the update window as modal
-                // After updating, reload the team list to reflect the changes
+                addWindow.ShowDialog(); // Mostrar la ventana de actualización como modal
+
+                // Después de actualizar, recargar la lista de equipos para reflejar los cambios
                 this.LoadTeams();
             }
         }
@@ -244,63 +256,66 @@ namespace WPFnba.View
             // Get the selected tab
             TabItem selectedTab = TabControl.SelectedItem as TabItem;
             string header = selectedTab.Header.ToString();
-
             // Call the corresponding method depending on the selected tab
             if (header == "Teams")
             {
-                // Check if a team has been selected in the list
+                // Verificar si se ha seleccionado un equipo en la lista
                 if (TeamsList.SelectedValue is null)
                 {
                     MessageBox.Show("You have to select a team before editing.");
                 }
                 else
                 {
-                    // Get the team data from the database
+                    // Obtener los datos del equipo desde la base de datos
                     int selectedTeamId = (int)TeamsList.SelectedValue;
-                    DataTable teamData = _teamController.GetTeam(selectedTeamId); // Method that returns the selected team
 
-                    // Check if team data was found
+                    DataTable teamData = _teamController.GetTeam(selectedTeamId); // Método que devuelve el equipo seleccionado
+
+                    // Verificar si se encontraron datos del equipo
                     if (teamData != null && teamData.Rows.Count > 0)
                     {
-                        // Open the team update window and pass the current data
+                        // Abrir la ventana de actualización del equipo y pasar los datos actuales
                         TeamFormWindow updateWindow = new TeamFormWindow(_teamController, teamData);
-                        updateWindow.ShowDialog(); // Show the update window as modal
-                        // After updating, reload the team list to reflect the changes
+                        updateWindow.ShowDialog(); // Mostrar la ventana de actualización como modal
+
+                        // Después de actualizar, recargar la lista de equipos para reflejar los cambios
                         this.LoadTeams();
                     }
                     else
                     {
-                        // Show an error message if the team data was not found
-                        MessageBox.Show("The selected team was not found.");
+                        // Mostrar mensaje de error si no se encontraron los datos del equipo
+                        MessageBox.Show("No se encontró el equipo seleccionado.");
                     }
                 }
             }
             else
             {
-                // Check if a player has been selected in the list
+                // Verificar si se ha seleccionado un equipo en la lista
                 if (TeamPlayersList.SelectedValue is null)
                 {
                     MessageBox.Show("You have to select a player before editing.");
                 }
                 else
                 {
-                    // Get the player data from the database
+                    // Obtener los datos del equipo desde la base de datos
                     int selectedPlayerId = (int)TeamPlayersList.SelectedValue;
-                    DataTable playerData = _playerController.GetPlayer(selectedPlayerId); // Method that returns the selected player
 
-                    // Check if player data was found
+                    DataTable playerData = _playerController.GetPlayer(selectedPlayerId); // Método que devuelve el equipo seleccionado
+
+                    // Verificar si se encontraron datos del equipo
                     if (playerData != null && playerData.Rows.Count > 0)
                     {
-                        // Open the player update window and pass the current data
+                        // Abrir la ventana de actualización del equipo y pasar los datos actuales
                         PlayerFormWindow updateWindow = new PlayerFormWindow(_playerController, playerData);
-                        updateWindow.ShowDialog(); // Show the update window as modal
-                        // After updating, reload the team list to reflect the changes
+                        updateWindow.ShowDialog(); // Mostrar la ventana de actualización como modal
+
+                        // Después de actualizar, recargar la lista de equipos para reflejar los cambios
                         this.LoadTeams();
                     }
                     else
                     {
-                        // Show an error message if the player data was not found
-                        MessageBox.Show("The selected player was not found.");
+                        // Mostrar mensaje de error si no se encontraron los datos del equipo
+                        MessageBox.Show("No se encontró el jugador seleccionado.");
                     }
                 }
             }
@@ -312,87 +327,86 @@ namespace WPFnba.View
             // Get the selected tab
             TabItem selectedTab = TabControl.SelectedItem as TabItem;
             string header = selectedTab.Header.ToString();
-
             // Call the corresponding method depending on the selected tab
             if (header == "Teams")
             {
-                // Check if a team has been selected in the list
+                // Verificar si se ha seleccionado un equipo en la lista
                 if (TeamsList.SelectedValue is null)
                 {
                     MessageBox.Show("You have to select a team before deleting.");
                 }
                 else
                 {
-                    // Get the team data from the database
+                    // Obtener los datos del equipo desde la base de datos
                     int selectedTeamId = (int)TeamsList.SelectedValue;
 
-                    // Show a confirmation dialog before deleting
+                    // Muestra un cuadro de diálogo de confirmación antes de eliminar
                     MessageBoxResult result = MessageBox.Show(
-                        "Are you sure you want to delete this team?",
-                        "Confirm deletion",
+                        "¿Estás seguro de que deseas eliminar este team?",
+                        "Confirmar eliminación",
                         MessageBoxButton.YesNo,
                         MessageBoxImage.Warning
                     );
 
-                    // If the user confirms the deletion, proceed to delete the team
+                    // Si el usuario confirma la eliminación, procede a eliminar al jugador
                     if (result == MessageBoxResult.Yes)
                     {
-                        // Call the controller method to delete the team
+                        // Llama al método del controlador para eliminar el jugador
                         bool success = _teamController.DeleteTeam(selectedTeamId);
 
-                        // Check if any error occurred during deletion
+                        // Verifica si ocurrió algún error en la eliminación
                         if (success)
                         {
-                            MessageBox.Show("Team deleted successfully.", "Done", MessageBoxButton.OK, MessageBoxImage.Information);
+                            MessageBox.Show("Team eliminado correctamente.", "Done", MessageBoxButton.OK, MessageBoxImage.Information);
                         }
                         else
                         {
-                            MessageBox.Show("Error deleting the team", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        }
+                            MessageBox.Show("Error al eliminar el team", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 
-                        // After deleting, reload the team list to reflect the changes
-                        LoadTeams();
+                            // Después de eliminar, recarga la lista de equipos para reflejar los cambios
+                            LoadTeams();
+                        }
                     }
                 }
             }
             else
             {
-                // Check if a player has been selected in the list
+                // Verificar si se ha seleccionado un equipo en la lista
                 if (TeamPlayersList.SelectedValue is null)
                 {
                     MessageBox.Show("You have to select a player before deleting.");
                 }
                 else
                 {
-                    // Get the player data from the database
+                    // Obtener los datos del equipo desde la base de datos
                     int selectedPlayerId = (int)TeamPlayersList.SelectedValue;
 
-                    // Show a confirmation dialog before deleting
+                    // Muestra un cuadro de diálogo de confirmación antes de eliminar
                     MessageBoxResult result = MessageBox.Show(
-                        "Are you sure you want to delete this player?",
-                        "Confirm deletion",
+                        "¿Estás seguro de que deseas eliminar este jugador?",
+                        "Confirmar eliminación",
                         MessageBoxButton.YesNo,
                         MessageBoxImage.Warning
                     );
 
-                    // If the user confirms the deletion, proceed to delete the player
+                    // Si el usuario confirma la eliminación, procede a eliminar al jugador
                     if (result == MessageBoxResult.Yes)
                     {
-                        // Call the controller method to delete the player
-                        bool success = _playerController.DeletePlayer(selectedPlayerId);
+                        // Llama al método del controlador para eliminar el jugador
+                        bool success = _teamController.DeleteTeam(selectedPlayerId);
 
-                        // Check if any error occurred during deletion
+                        // Verifica si ocurrió algún error en la eliminación
                         if (success)
                         {
-                            MessageBox.Show("Player deleted successfully.", "Done", MessageBoxButton.OK, MessageBoxImage.Information);
+                            MessageBox.Show("Jugador eliminado correctamente.", "Done", MessageBoxButton.OK, MessageBoxImage.Information);
                         }
                         else
                         {
-                            MessageBox.Show("Error deleting the player", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        }
+                            MessageBox.Show("Error al eliminar el jugador", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 
-                        // After deleting, reload the team list to reflect the changes
-                        LoadTeams();
+                            // Después de eliminar, recarga la lista de equipos para reflejar los cambios
+                            LoadTeams();
+                        }
                     }
                 }
             }
@@ -420,6 +434,7 @@ namespace WPFnba.View
             // Close the application
             this.Close();
         }
+
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
@@ -453,7 +468,7 @@ namespace WPFnba.View
                 Info_Event(sender, e);
             }
 
-            // Exit the application with Ctrl + Q
+            // Salir de la aplicación con Ctrl + Q
             if (e.Key == Key.Q && (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
             {
                 Exit_Event(sender, e);

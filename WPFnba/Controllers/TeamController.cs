@@ -1,6 +1,6 @@
 ﻿using System;
+using System;
 using System.Collections.Generic;
-
 using System.Data;
 
 /// <summary>
@@ -47,10 +47,10 @@ public class TeamController
     /// <summary>
     /// Updates an existing team in the database.
     /// </summary>
-    /// <param name="teamData">A list of strings containing updated team data.</param>
+    /// <param name="teamData">An array of strings containing updated team data.</param>
     internal bool UpdateTeam(List<string> teamData)
     {
-        // Call the repository method to update the team
+        // Llamar al método del repositorio para actualizar el equipo
         return teamRepository.UpdateTeam(teamData);
     }
 
@@ -64,10 +64,9 @@ public class TeamController
     }
 
     /// <summary>
-    /// Retrieves a team by its unique ID.
+    /// Retrieves all teams from the database.
     /// </summary>
-    /// <param name="id">The ID of the team to retrieve.</param>
-    /// <returns>A DataTable containing the team's information if found; otherwise, null.</returns>
+    /// <returns>A list of all teams.</returns>
     public DataTable GetTeam(int id)
     {
         return teamRepository.GetTeam(id);
@@ -76,7 +75,7 @@ public class TeamController
     /// <summary>
     /// Retrieves all teams from the database.
     /// </summary>
-    /// <returns>A DataTable containing all teams.</returns>
+    /// <returns>A list of all teams.</returns>
     public DataTable GetTeams()
     {
         return teamRepository.GetTeams();
