@@ -10,60 +10,69 @@ namespace WPFnba.Views
     /// </summary>
     public partial class TeamFormWindow1 : Window
     {
-        private TeamController _teamController; // Instancia del controlador para gestionar la lógica de datos
-        private DataRow teamRow; // Almacena la fila del equipo seleccionado para su actualización
+        private TeamController _teamController; // Instance of the controller to manage data logic
 
+        /// <summary>
+        /// Constructor to initialize the form for adding a new team.
+        /// </summary>
+        /// <param name="teamController">The team controller instance.</param>
         public TeamFormWindow1(TeamController teamController)
         {
-            InitializeComponent(); // Se inicializan los componentes de la ventana
+            InitializeComponent(); // Initializes the window components
 
-            // Asigna la instancia del controlador
+            // Assign the controller instance
             _teamController = teamController;
         }
 
+        /// <summary>
+        /// Handles the save event to add a new team to the database.
+        /// </summary>
         private void Save_Event(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("You are going to add a registry. Are you sure?"); // Mensaje de confirmación
+            MessageBox.Show("You are going to add a record. Are you sure?"); // Confirmation message
 
             try
             {
-                // Extraer el ID y la última hora de modificación del DataTable
-                int id = 0; // ID del equipo
-                string dateLastUpdated = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"); // Fecha y hora actual
+                // Extract the ID and last updated time from the DataTable
+                int id = 0; // Team ID (will be auto-generated)
+                string dateLastUpdated = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"); // Current date and time
 
-                // Crear una lista con los datos actualizados
+                // Create a list with the new team data
                 List<string> newTeamData = new List<string>
                 {
-                    id.ToString(), // ID del equipo
-                    TeamName_tbox.Text.Trim(), // Nombre del equipo
-                    TeamConference_tbox.Text.Trim(), // Conferencia del equipo
-                    TeamRecord_tbox.Text.Trim(), // Récord del equipo
-                    TeamLogo_tbox.Text.Trim(), // URL del logo del equipo
-                    dateLastUpdated // Última hora de modificación
+                    id.ToString(), // Team ID
+                    TeamName_tbox.Text.Trim(), // Team name
+                    TeamConference_tbox.Text.Trim(), // Team conference
+                    TeamRecord_tbox.Text.Trim(), // Team record
+                    TeamLogo_tbox.Text.Trim(), // Team logo URL
+                    dateLastUpdated // Last updated time
                 };
 
-                // Llama al método del controlador para actualizar los datos en la base de datos
+                // Call the controller method to add the new team to the database
                 bool success = _teamController.AddTeam(newTeamData);
 
-                if (success) // Verifica si ocurrió un error en la actualización
+                if (success) // Check if an error occurred during the addition
                 {
-                    MessageBox.Show("La actualización se ha realizado correctamente.");
-                    this.Close(); // Cierra la ventana después de la actualización
+                    MessageBox.Show("The team was added successfully.");
+                    this.Close(); // Close the window after the addition
                 }
                 else
                 {
-                    MessageBox.Show("Ha sucedido un error en la actualización.");
+                    MessageBox.Show("An error occurred while adding the team.");
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al procesar los datos: {ex.Message}");
+                MessageBox.Show($"Error processing data: {ex.Message}");
             }
         }
 
+        /// <summary>
+        /// Handles the cancel event to close the window without making changes.
+        /// </summary>
         private void Cancel_Event(object sender, RoutedEventArgs e)
         {
-            this.Close(); // Cierra la ventana sin realizar ninguna modificación
+            this.Close(); // Close the window without making any modifications
         }
     }
 }

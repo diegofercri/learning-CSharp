@@ -10,111 +10,121 @@ namespace WPFnba.View
     /// </summary>
     public partial class PlayerFormWindow : Window
     {
-        private PlayerController _playerController; // Instancia del controlador para gestionar la lógica de datos
-        private DataRow playerRow; // Almacena la fila del equipo seleccionado para su actualización
+        private PlayerController _playerController; // Instance of the controller to manage data logic
+        private DataRow playerRow; // Stores the selected player row for updating
 
+        /// <summary>
+        /// Constructor to initialize the form with player data.
+        /// </summary>
+        /// <param name="playerController">The player controller instance.</param>
+        /// <param name="playerData">The DataTable containing player data.</param>
         public PlayerFormWindow(PlayerController playerController, DataTable playerData)
         {
-            InitializeComponent(); // Se inicializan los componentes de la ventana
+            InitializeComponent(); // Initializes the window components
 
             if (playerData == null || playerData.Rows.Count == 0)
             {
-                MessageBox.Show("No se proporcionaron datos válidos para el jugador.");
-                this.Close(); // Cierra la ventana si no hay datos válidos
+                MessageBox.Show("No valid data provided for the player.");
+                this.Close(); // Closes the window if no valid data is provided
                 return;
             }
 
-            // Asigna la instancia del controlador
+            // Assign the controller instance
             _playerController = playerController;
 
-            // Obtiene la primera fila del DataTable (asumimos que solo hay un equipo)
+            // Get the first row from the DataTable (assuming there's only one player)
             playerRow = playerData.Rows[0];
 
-            // Carga los datos del equipo en los campos de la interfaz
-            this.PlayerPhoto_tbox.Text = playerRow["headShotUrl"]?.ToString() ?? string.Empty; // URL de la foto del jugador
-            this.PlayerFirstName_tbox.Text = playerRow["firstName"]?.ToString() ?? string.Empty; // Nombre del jugador
-            this.PlayerLastName_tbox.Text = playerRow["lastName"]?.ToString() ?? string.Empty; // Número del jugador
-            this.PlayerTeam_tbox.Text = playerRow["team"]?.ToString() ?? string.Empty; // Equipo del jugador
-            this.PlayerPosition_tbox.Text = playerRow["position"]?.ToString() ?? string.Empty; // Posición del jugador
-            this.PlayerJerseyNumber_tbox.Text = playerRow["jerseyNumber"]?.ToString() ?? string.Empty; // Número del jugador
-            this.PlayerAge_tbox.Text = playerRow["age"]?.ToString() ?? string.Empty; // Edad del jugador
-            this.PlayerDateOfBirth_tbox.Text = playerRow["dateOfBirth"]?.ToString() ?? string.Empty; // Fecha de nacimiento del jugador
-            this.PlayerHeight_tbox.Text = playerRow["height"]?.ToString() ?? string.Empty; // Altura del jugador
-            this.PlayerWeight_tbox.Text = playerRow["weight"]?.ToString() ?? string.Empty; // Peso del jugador
-            this.PlayerPoints_tbox.Text = playerRow["careerPoints"]?.ToString() ?? string.Empty; // Puntos en la carrera del jugador
-            this.PlayerBlocks_tbox.Text = playerRow["careerBlocks"]?.ToString() ?? string.Empty; // Bloqueos en la carrera del jugador
-            this.PlayerAssists_tbox.Text = playerRow["careerAssists"]?.ToString() ?? string.Empty; // Asistencias en la carrera del jugador
-            this.PlayerRebounds_tbox.Text = playerRow["careerRebounds"]?.ToString() ?? string.Empty; // Rebotes en la carrera del jugador
-            this.PlayerTurnovers_tbox.Text = playerRow["careerTurnovers"]?.ToString() ?? string.Empty; // Pérdidas en la carrera del jugador
-            this.PlayerThree_tbox.Text = playerRow["careerPercentageThree"]?.ToString() ?? string.Empty; // Porcentaje de triples en la carrera del jugador
-            this.PlayerFreethrow_tbox.Text = playerRow["careerPercentageFreethrow"]?.ToString() ?? string.Empty; // Porcentaje de tiros libres en la carrera del jugador
-            this.PlayerFieldGoal_tbox.Text = playerRow["careerPercentageFieldGoal"]?.ToString() ?? string.Empty; // Porcentaje de tiros de campo en la carrera del jugador
-
+            // Load player data into the UI fields
+            this.PlayerPhoto_tbox.Text = playerRow["headShotUrl"]?.ToString() ?? string.Empty; // Player photo URL
+            this.PlayerFirstName_tbox.Text = playerRow["firstName"]?.ToString() ?? string.Empty; // Player's first name
+            this.PlayerLastName_tbox.Text = playerRow["lastName"]?.ToString() ?? string.Empty; // Player's last name
+            this.PlayerTeam_tbox.Text = playerRow["team"]?.ToString() ?? string.Empty; // Player's team
+            this.PlayerPosition_tbox.Text = playerRow["position"]?.ToString() ?? string.Empty; // Player's position
+            this.PlayerJerseyNumber_tbox.Text = playerRow["jerseyNumber"]?.ToString() ?? string.Empty; // Player's jersey number
+            this.PlayerAge_tbox.Text = playerRow["age"]?.ToString() ?? string.Empty; // Player's age
+            this.PlayerDateOfBirth_tbox.Text = playerRow["dateOfBirth"]?.ToString() ?? string.Empty; // Player's date of birth
+            this.PlayerHeight_tbox.Text = playerRow["height"]?.ToString() ?? string.Empty; // Player's height
+            this.PlayerWeight_tbox.Text = playerRow["weight"]?.ToString() ?? string.Empty; // Player's weight
+            this.PlayerPoints_tbox.Text = playerRow["careerPoints"]?.ToString() ?? string.Empty; // Career points
+            this.PlayerBlocks_tbox.Text = playerRow["careerBlocks"]?.ToString() ?? string.Empty; // Career blocks
+            this.PlayerAssists_tbox.Text = playerRow["careerAssists"]?.ToString() ?? string.Empty; // Career assists
+            this.PlayerRebounds_tbox.Text = playerRow["careerRebounds"]?.ToString() ?? string.Empty; // Career rebounds
+            this.PlayerTurnovers_tbox.Text = playerRow["careerTurnovers"]?.ToString() ?? string.Empty; // Career turnovers
+            this.PlayerThree_tbox.Text = playerRow["careerPercentageThree"]?.ToString() ?? string.Empty; // Three-point percentage
+            this.PlayerFreethrow_tbox.Text = playerRow["careerPercentageFreethrow"]?.ToString() ?? string.Empty; // Free throw percentage
+            this.PlayerFieldGoal_tbox.Text = playerRow["careerPercentageFieldGoal"]?.ToString() ?? string.Empty; // Field goal percentage
         }
 
+        /// <summary>
+        /// Handles the save event to update player data in the database.
+        /// </summary>
         private void Save_Event(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("You are going to modify a registry. Are you sure?"); // Mensaje de confirmación
+            MessageBox.Show("You are going to modify a record. Are you sure?"); // Confirmation message
 
             if (playerRow == null)
             {
-                MessageBox.Show("Los datos del jugador no están disponibles.");
+                MessageBox.Show("Player data is not available.");
                 return;
             }
 
             try
             {
-                // Extraer el ID y la última hora de modificación del DataTable
-                int id = Convert.ToInt32(playerRow["id"]); // ID del equipo
-                string dateLastUpdated = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"); // Fecha y hora actual
+                // Extract the ID and last updated time from the DataTable
+                int id = Convert.ToInt32(playerRow["id"]); // Player ID
+                string dateLastUpdated = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"); // Current date and time
 
-                // Crear una lista con los datos actualizados
+                // Create a list with the updated player data
                 List<string> updatedPlayerData = new List<string>
                 {
-                    id.ToString(), // ID del jugador
-                    PlayerFirstName_tbox.Text.Trim(), // Nombre del jugador
-                    PlayerLastName_tbox.Text.Trim(), // Apellido del jugador
-                    PlayerTeam_tbox.Text.Trim(), // Equipo del jugador
-                    PlayerPosition_tbox.Text.Trim(), // Posición del jugador
-                    PlayerDateOfBirth_tbox.Text.Trim(), // Fecha de nacimiento del jugador
-                    PlayerHeight_tbox.Text.Trim(), // Altura del jugador
-                    PlayerWeight_tbox.Text.Trim(), // Peso del jugador
-                    PlayerJerseyNumber_tbox.Text.Trim(), // Número del jugador
-                    PlayerAge_tbox.Text.Trim(), // Edad del jugador
-                    PlayerPoints_tbox.Text.Trim(), // Puntos en la carrera del jugador
-                    PlayerBlocks_tbox.Text.Trim(), // Bloqueos en la carrera del jugador
-                    PlayerAssists_tbox.Text.Trim(), // Asistencias en la carrera del jugador
-                    PlayerRebounds_tbox.Text.Trim(), // Rebotes en la carrera del jugador
-                    PlayerTurnovers_tbox.Text.Trim(), // Pérdidas en la carrera del jugador
-                    PlayerThree_tbox.Text.Trim(), // Porcentaje de triples en la carrera del jugador
-                    PlayerFreethrow_tbox.Text.Trim(), // Porcentaje de tiros libres en la carrera del jugador
-                    PlayerFieldGoal_tbox.Text.Trim(), // Porcentaje de tiros de campo en la carrera del jugador
-                    PlayerPhoto_tbox.Text.Trim(), // URL de la foto del jugador
-                    dateLastUpdated // Última hora de modificación
+                    id.ToString(), // Player ID
+                    PlayerFirstName_tbox.Text.Trim(), // First name
+                    PlayerLastName_tbox.Text.Trim(), // Last name
+                    PlayerTeam_tbox.Text.Trim(), // Team
+                    PlayerPosition_tbox.Text.Trim(), // Position
+                    PlayerDateOfBirth_tbox.Text.Trim(), // Date of birth
+                    PlayerHeight_tbox.Text.Trim(), // Height
+                    PlayerWeight_tbox.Text.Trim(), // Weight
+                    PlayerJerseyNumber_tbox.Text.Trim(), // Jersey number
+                    PlayerAge_tbox.Text.Trim(), // Age
+                    PlayerPoints_tbox.Text.Trim(), // Career points
+                    PlayerBlocks_tbox.Text.Trim(), // Career blocks
+                    PlayerAssists_tbox.Text.Trim(), // Career assists
+                    PlayerRebounds_tbox.Text.Trim(), // Career rebounds
+                    PlayerTurnovers_tbox.Text.Trim(), // Career turnovers
+                    PlayerThree_tbox.Text.Trim(), // Three-point percentage
+                    PlayerFreethrow_tbox.Text.Trim(), // Free throw percentage
+                    PlayerFieldGoal_tbox.Text.Trim(), // Field goal percentage
+                    PlayerPhoto_tbox.Text.Trim(), // Photo URL
+                    dateLastUpdated // Last updated time
                 };
 
-                // Llama al método del controlador para actualizar los datos en la base de datos
+                // Call the controller method to update the data in the database
                 bool success = _playerController.UpdatePlayer(updatedPlayerData);
 
-                if (success) // Verifica si ocurrió un error en la actualización
+                if (success) // Check if an error occurred during the update
                 {
-                    MessageBox.Show("La actualización se ha realizado correctamente.");
-                    this.Close(); // Cierra la ventana después de la actualización
+                    MessageBox.Show("The update was successful.");
+                    this.Close(); // Close the window after the update
                 }
                 else
                 {
-                    MessageBox.Show("Ha sucedido un error en la actualización.");
+                    MessageBox.Show("An error occurred during the update.");
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al procesar los datos: {ex.Message}");
+                MessageBox.Show($"Error processing data: {ex.Message}");
             }
         }
 
+        /// <summary>
+        /// Handles the cancel event to close the window without making changes.
+        /// </summary>
         private void Cancel_Event(object sender, RoutedEventArgs e)
         {
-            this.Close(); // Cierra la ventana sin realizar ninguna modificación
+            this.Close(); // Close the window without making any modifications
         }
     }
 }
