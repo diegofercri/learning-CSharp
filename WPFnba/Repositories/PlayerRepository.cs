@@ -48,7 +48,7 @@ public class PlayerRepository
                 switch (i)
                 {
                     case 0:
-                        player.id = GetNextId();
+                        player.id = int.Parse(playerData[i]);
                         break;
                     case 1:
                         player.firstName = playerData[i];
@@ -516,7 +516,7 @@ public class PlayerRepository
     /// Gets the maximum ID from the players table.
     /// </summary>
     /// <returns>The maximum ID or 0 if no records exist.</returns>
-    private int GetNextId()
+    public int GetNextId()
     {
         // Get the maximum ID from the database
         var maxId = dataContext.GetTable<player>().Max(t => t.id);

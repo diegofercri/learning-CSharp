@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using System.Data;
 
@@ -21,9 +22,26 @@ public class TeamController
     /// Adds a new team to the database.
     /// </summary>
     /// <param name="teamData">A list of strings containing team data.</param>
-    public bool AddTeam(List<string> teamData)
+    internal bool AddTeam(List<string> teamData)
     {
-        return teamRepository.InsertTeam(teamData);
+        if (teamData == null || teamData.Count < 6)
+        {
+            throw new ArgumentException("Invalid team data provided.");
+        }
+
+        try
+        {
+            int nextId = teamRepository.GetNextId();
+
+            teamData.Insert(0, nextId.ToString());
+
+            return teamRepository.InsertTeam(teamData);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Error: {e.Message}");
+            return false;
+        }
     }
 
     /// <summary>

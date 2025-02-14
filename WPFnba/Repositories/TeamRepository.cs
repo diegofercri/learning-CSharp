@@ -253,7 +253,7 @@ public class TeamRepository
     /// Gets the maximum ID from the teams table.
     /// </summary>
     /// <returns>The maximum ID or 0 if no records exist.</returns>
-    private int GetNextId()
+    public int GetNextId()
     {
         // Get the maximum ID from the database
         var maxId = dataContext.GetTable<team>().Max(t => t.id);

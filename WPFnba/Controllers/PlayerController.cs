@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using System.Data;
 
@@ -23,7 +24,24 @@ public class PlayerController
     /// <param name="playerData">A list of strings containing player data.</param>
     public bool AddPlayer(List<string> playerData)
     {
-        return playerRepository.InsertPlayer(playerData);
+        if (playerData == null || playerData.Count < 19)
+        {
+            throw new ArgumentException("Invalid player data provided.");
+        }
+
+        try
+        {
+            int nextId = playerRepository.GetNextId();
+
+            playerData.Insert(0, nextId.ToString());
+
+            return playerRepository.InsertPlayer(playerData);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Error: {e.Message}");
+            return false;
+        }
     }
 
     /// <summary>
