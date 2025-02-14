@@ -38,6 +38,12 @@ namespace WPFnba
     partial void Deleteteam(team instance);
     #endregion
 		
+		public DataContextDataContext() : 
+				base(global::WPFnba.Properties.Settings.Default.nbadbConnectionString2, mappingSource)
+		{
+			OnCreated();
+		}
+		
 		public DataContextDataContext(string connection) : 
 				base(connection, mappingSource)
 		{
@@ -109,7 +115,7 @@ namespace WPFnba
 		
 		private System.Nullable<decimal> _careerBlocks;
 		
-		private System.Nullable<decimal> _carrerAssists;
+		private System.Nullable<decimal> _careerAssists;
 		
 		private System.Nullable<decimal> _careerRebounds;
 		
@@ -416,20 +422,20 @@ namespace WPFnba
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="carrerAssists", Storage="_carrerAssists", DbType="Decimal(4,1)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_careerAssists", DbType="Decimal(4,1)")]
 		public System.Nullable<decimal> careerAssists
 		{
 			get
 			{
-				return this._carrerAssists;
+				return this._careerAssists;
 			}
 			set
 			{
-				if ((this._carrerAssists != value))
+				if ((this._careerAssists != value))
 				{
 					this.OncareerAssistsChanging(value);
 					this.SendPropertyChanging();
-					this._carrerAssists = value;
+					this._careerAssists = value;
 					this.SendPropertyChanged("careerAssists");
 					this.OncareerAssistsChanged();
 				}

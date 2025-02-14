@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using WPFnba.Views;
 
 namespace WPFnba.View
 {
@@ -231,11 +232,21 @@ namespace WPFnba.View
             // Call the corresponding method depending on the selected tab
             if (header == "Teams")
             {
+                // Abrir la ventana de actualización del equipo y pasar los datos actuales
+                TeamFormWindow1 addWindow = new TeamFormWindow1(_teamController);
+                addWindow.ShowDialog(); // Mostrar la ventana de actualización como modal
 
+                // Después de actualizar, recargar la lista de equipos para reflejar los cambios
+                this.LoadTeams();
             }
             else
             {
+                // Abrir la ventana de actualización del equipo y pasar los datos actuales
+                PlayerFormWindow1 addWindow = new PlayerFormWindow1(_playerController);
+                addWindow.ShowDialog(); // Mostrar la ventana de actualización como modal
 
+                // Después de actualizar, recargar la lista de equipos para reflejar los cambios
+                this.LoadTeams();
             }
         }
 
@@ -319,11 +330,85 @@ namespace WPFnba.View
             // Call the corresponding method depending on the selected tab
             if (header == "Teams")
             {
+                // Verificar si se ha seleccionado un equipo en la lista
+                if (TeamsList.SelectedValue is null)
+                {
+                    MessageBox.Show("You have to select a team before deleting.");
+                }
+                else
+                {
+                    // Obtener los datos del equipo desde la base de datos
+                    int selectedTeamId = (int)TeamsList.SelectedValue;
 
+                    // Muestra un cuadro de diálogo de confirmación antes de eliminar
+                    MessageBoxResult result = MessageBox.Show(
+                        "¿Estás seguro de que deseas eliminar este team?",
+                        "Confirmar eliminación",
+                        MessageBoxButton.YesNo,
+                        MessageBoxImage.Warning
+                    );
+
+                    // Si el usuario confirma la eliminación, procede a eliminar al jugador
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        // Llama al método del controlador para eliminar el jugador
+                        bool success = _teamController.DeleteTeam(selectedTeamId);
+
+                        // Verifica si ocurrió algún error en la eliminación
+                        if (success)
+                        {
+                            MessageBox.Show("Team eliminado correctamente.", "Done", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Error al eliminar el team", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                            // Después de eliminar, recarga la lista de equipos para reflejar los cambios
+                            LoadTeams();
+                        }
+                    }
+                }
             }
             else
             {
+                // Verificar si se ha seleccionado un equipo en la lista
+                if (TeamPlayersList.SelectedValue is null)
+                {
+                    MessageBox.Show("You have to select a player before deleting.");
+                }
+                else
+                {
+                    // Obtener los datos del equipo desde la base de datos
+                    int selectedPlayerId = (int)TeamPlayersList.SelectedValue;
 
+                    // Muestra un cuadro de diálogo de confirmación antes de eliminar
+                    MessageBoxResult result = MessageBox.Show(
+                        "¿Estás seguro de que deseas eliminar este jugador?",
+                        "Confirmar eliminación",
+                        MessageBoxButton.YesNo,
+                        MessageBoxImage.Warning
+                    );
+
+                    // Si el usuario confirma la eliminación, procede a eliminar al jugador
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        // Llama al método del controlador para eliminar el jugador
+                        bool success = _teamController.DeleteTeam(selectedPlayerId);
+
+                        // Verifica si ocurrió algún error en la eliminación
+                        if (success)
+                        {
+                            MessageBox.Show("Jugador eliminado correctamente.", "Done", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Error al eliminar el jugador", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                            // Después de eliminar, recarga la lista de equipos para reflejar los cambios
+                            LoadTeams();
+                        }
+                    }
+                }
             }
         }
 

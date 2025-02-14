@@ -82,5 +82,27 @@ namespace WPFnba.Properties {
                 return ((string)(this["nbadbConnectionString3"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=tcp:sql-server-diegofercri.database.windows.net;Initial Catalog=nbadb" +
+            "_2025-02-13T04-41Z;User ID=diego")]
+        public string nbadb_2025_02_13T04_41ZConnectionString {
+            get {
+                return ((string)(this["nbadb_2025_02_13T04_41ZConnectionString"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=tcp:sql-server-diegofercri.database.windows.net;Initial Catalog=nbadb" +
+            "_2025-02-13T04-41Z;User ID=diego;Password=wjt7utrX*XAErMxis@GebdXM")]
+        public string nbadb_2025_02_13T04_41ZConnectionString1 {
+            get {
+                return ((string)(this["nbadb_2025_02_13T04_41ZConnectionString1"]));
+            }
+        }
     }
 }

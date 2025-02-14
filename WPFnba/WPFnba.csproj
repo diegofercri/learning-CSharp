@@ -93,13 +93,17 @@
     <Compile Include="Views\PlayerFormWindow.xaml.cs">
       <DependentUpon>PlayerFormWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\PlayerFormWindow1.xaml.cs">
+      <DependentUpon>PlayerFormWindow1.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TeamFormWindow.xaml.cs">
       <DependentUpon>TeamFormWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\TeamFormWindow1.xaml.cs">
+      <DependentUpon>TeamFormWindow1.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Player.cs" />
-    <Compile Include="Models\Team.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -153,7 +157,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\PlayerFormWindow1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\TeamFormWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TeamFormWindow1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

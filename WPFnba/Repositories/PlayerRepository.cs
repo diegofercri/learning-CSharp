@@ -32,83 +32,101 @@ public class PlayerRepository
     /// Inserts a new player into the database.
     /// </summary>
     /// <param name="playerData">A list of strings containing player data.</param>
-    public void InsertPlayer(List<string> playerData)
+    public bool InsertPlayer(List<string> playerData)
     {
         if (playerData == null || playerData.Count < 19)
         {
             throw new ArgumentException("Invalid player data provided.");
         }
 
-        Player player = new Player();
-        for (int i = 0; i < playerData.Count; i++)
+        try
         {
-            switch (i)
+            player player = new player();
+            for (int i = 0; i < playerData.Count; i++)
             {
-                case 0:
-                    player.Id = int.Parse(playerData[i]);
-                    break;
-                case 1:
-                    player.FirstName = playerData[i];
-                    break;
-                case 2:
-                    player.LastName = playerData[i];
-                    break;
-                case 3:
-                    player.Team = playerData[i];
-                    break;
-                case 4:
-                    player.Position = playerData[i];
-                    break;
-                case 5:
-                    player.JerseyNumber = playerData[i];
-                    break;
-                case 6:
-                    player.Age = playerData[i];
-                    break;
-                case 7:
-                    player.DateOfBirth = playerData[i];
-                    break;
-                case 8:
-                    player.Height = playerData[i];
-                    break;
-                case 9:
-                    player.Weight = playerData[i];
-                    break;
-                case 10:
-                    player.CareerPoints = string.IsNullOrEmpty(playerData[i]) ? 0 : decimal.Parse(playerData[i]);
-                    break;
-                case 11:
-                    player.CareerBlocks = string.IsNullOrEmpty(playerData[i]) ? 0 : decimal.Parse(playerData[i]);
-                    break;
-                case 12:
-                    player.CareerAssists = string.IsNullOrEmpty(playerData[i]) ? 0 : decimal.Parse(playerData[i]);
-                    break;
-                case 13:
-                    player.CareerRebounds = string.IsNullOrEmpty(playerData[i]) ? 0 : decimal.Parse(playerData[i]);
-                    break;
-                case 14:
-                    player.CareerTurnovers = string.IsNullOrEmpty(playerData[i]) ? 0 : decimal.Parse(playerData[i]);
-                    break;
-                case 15:
-                    player.CareerPercentageThree = string.IsNullOrEmpty(playerData[i]) ? 0 : decimal.Parse(playerData[i]);
-                    break;
-                case 16:
-                    player.CareerPercentageFreethrow = string.IsNullOrEmpty(playerData[i]) ? 0 : decimal.Parse(playerData[i]);
-                    break;
-                case 17:
-                    player.CareerPercentageFieldGoal = string.IsNullOrEmpty(playerData[i]) ? 0 : decimal.Parse(playerData[i]);
-                    break;
-                case 18:
-                    player.HeadShotUrl = playerData[i];
-                    break;
-                case 19:
-                    player.DateLastUpdated = string.IsNullOrEmpty(playerData[i]) ? DateTime.Now.ToString() : playerData[i];
-                    break;
+                switch (i)
+                {
+                    case 0:
+                        player.id = GetNextId();
+                        break;
+                    case 1:
+                        player.firstName = playerData[i];
+                        break;
+                    case 2:
+                        player.lastName = playerData[i];
+                        break;
+                    case 3:
+                        player.team = playerData[i];
+                        break;
+                    case 4:
+                        player.position = playerData[i];
+                        break;
+                    case 5:
+                        player.jerseyNumber = playerData[i];
+                        break;
+                    case 6:
+                        player.age = playerData[i];
+                        break;
+                    case 7:
+                        player.dateOfBirth = playerData[i];
+                        break;
+                    case 8:
+                        player.height = playerData[i];
+                        break;
+                    case 9:
+                        player.weight = playerData[i];
+                        break;
+                    case 10:
+                        player.careerPoints = decimal.Parse(playerData[i]);
+                        break;
+                    case 11:
+                        player.careerBlocks = decimal.Parse(playerData[i]);
+                        break;
+                    case 12:
+                        player.careerAssists = decimal.Parse(playerData[i]);
+                        break;
+                    case 13:
+                        player.careerRebounds = decimal.Parse(playerData[i]);
+                        break;
+                    case 14:
+                        player.careerTurnovers = decimal.Parse(playerData[i]);
+                        break;
+                    case 15:
+                        player.careerPercentageThree = decimal.Parse(playerData[i]);
+                        break;
+                    case 16:
+                        player.careerPercentageFreethrow = decimal.Parse(playerData[i]);
+                        break;
+                    case 17:
+                        player.careerPercentageFieldGoal = decimal.Parse(playerData[i]);
+                        break;
+                    case 18:
+                        player.headShotUrl = playerData[i];
+                        break;
+                    case 19:
+                        player.dateLastUpdated = playerData[i];
+                        break;
+                }
             }
-        }
 
-        dataContext.GetTable<Player>().InsertOnSubmit(player);
-        dataContext.SubmitChanges();
+            player playerSearch = dataContext.GetTable<player>().First(p => p.id == player.id);
+            foreach (var prop in player.GetType().GetProperties())
+            {
+                if (prop.Name != "id")
+                {
+                    prop.SetValue(playerSearch, prop.GetValue(player));
+                }
+            }
+
+            dataContext.GetTable<player>().InsertOnSubmit(player);
+            dataContext.SubmitChanges();
+            return true;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Error: {e.Message}");
+            return false;
+        }
     }
 
     /// <summary>
@@ -216,11 +234,20 @@ public class PlayerRepository
     /// Deletes a player from the database.
     /// </summary>
     /// <param name="id">The ID of the player to delete.</param>
-    public void DeletePlayer(int id)
+    public bool DeletePlayer(int id)
     {
-        Player player = dataContext.GetTable<Player>().First(p => p.Id == id);
-        dataContext.GetTable<Player>().DeleteOnSubmit(player);
-        dataContext.SubmitChanges();
+        try
+        {
+            player player = dataContext.GetTable<player>().First(p => p.id == id);
+            dataContext.GetTable<player>().DeleteOnSubmit(player);
+            dataContext.SubmitChanges();
+            return true;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Error: {e.Message}");
+            return false;
+        }
     }
 
     /// <summary>
@@ -490,5 +517,18 @@ public class PlayerRepository
             Console.WriteLine($"Error: {e.Message}");
             return null;
         }
+    }
+
+    /// <summary>
+    /// Obtiene el ID máximo de la tabla de jugadores.
+    /// </summary>
+    /// <returns>El ID máximo o 0 si no hay registros.</returns>
+    private int GetNextId()
+    {
+        // Obtener el ID máximo de la base de datos
+        var maxId = dataContext.GetTable<team>().Max(t => t.id);
+
+        // Devolver el siguiente ID
+        return maxId + 1;
     }
 }

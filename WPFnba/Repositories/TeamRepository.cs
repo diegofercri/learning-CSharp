@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
 using System.Data.Linq;
 using System.Linq;
 using WPFnba;
@@ -28,41 +29,53 @@ public class TeamRepository
     /// Inserts a new team into the database.
     /// </summary>
     /// <param name="teamData">A list of strings containing team data.</param>
-    internal void InsertTeam(List<string> teamData)
+    internal bool InsertTeam(List<string> teamData)
     {
-        if (teamData == null || teamData.Count < 6)
+        // Validar que los datos sean válidos
+        if (teamData == null || teamData.Count < 6) // Solo necesitamos 5 elementos sin el ID
         {
             throw new ArgumentException("Invalid team data provided.");
         }
 
-        Team team = new Team();
-        for (int i = 0; i < teamData.Count; i++)
+        try
         {
-            switch (i)
+            team team = new team();
+            for (int i = 0; i < teamData.Count; i++)
             {
-                case 0:
-                    team.Id = int.Parse(teamData[i]);
-                    break;
-                case 1:
-                    team.Name = teamData[i];
-                    break;
-                case 2:
-                    team.Conference = teamData[i];
-                    break;
-                case 3:
-                    team.Record = teamData[i];
-                    break;
-                case 4:
-                    team.TeamLogoUrl = teamData[i];
-                    break;
-                case 5:
-                    team.DateLastUpdated = teamData[i];
-                    break;
+                switch (i)
+                {
+                    case 0:
+                        team.id = int.Parse(teamData[i]);
+                        break;
+                    case 1:
+                        team.name = teamData[i];
+                        break;
+                    case 2:
+                        team.conference = teamData[i];
+                        break;
+                    case 3:
+                        team.record = teamData[i];
+                        break;
+                    case 4:
+                        team.teamLogoUrl = teamData[i];
+                        break;
+                    case 5:
+                        team.dateLastUpdated = teamData[i];
+                        break;
+                }
             }
-        }
 
-        dataContext.GetTable<Team>().InsertOnSubmit(team);
-        dataContext.SubmitChanges();
+            // Agregar el equipo a la base de datos
+            dataContext.GetTable<team>().InsertOnSubmit(team);
+            dataContext.SubmitChanges();
+
+            return true; // Indica éxito
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Error: {e.Message}");
+            return false; // Indica fallo
+        }
     }
 
     /// <summary>
@@ -127,11 +140,20 @@ public class TeamRepository
     /// Deletes a team from the database.
     /// </summary>
     /// <param name="id">The ID of the team to delete.</param>
-    internal void DeleteTeam(int id)
+    internal bool DeleteTeam(int id)
     {
-        team _team = dataContext.GetTable<team>().First(t => t.id == id);
-        dataContext.GetTable<team>().DeleteOnSubmit(_team);
-        dataContext.SubmitChanges();
+        try
+        {
+            team _team = dataContext.GetTable<team>().First(t => t.id == id);
+            dataContext.GetTable<team>().DeleteOnSubmit(_team);
+            dataContext.SubmitChanges();
+            return true;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Error: {e.Message}");
+            return false;
+        }
     }
 
     /// <summary>
@@ -232,5 +254,18 @@ public class TeamRepository
             Console.WriteLine($"Error: {e.Message}");
             return null;
         }
+    }
+
+    /// <summary>
+    /// Obtiene el ID máximo de la tabla de equipos.
+    /// </summary>
+    /// <returns>El ID máximo o 0 si no hay registros.</returns>
+    private int GetNextId()
+    {
+        // Obtener el ID máximo de la base de datos
+        var maxId = dataContext.GetTable<team>().Max(t => t.id);
+
+        // Devolver el siguiente ID
+        return maxId + 1;
     }
 }

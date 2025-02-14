@@ -1,0 +1,73 @@
+﻿<Window x:Class="WPFnba.Views.TeamFormWindow1"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPFnba.Views"
+        mc:Ignorable="d"
+        Title="Team Form" Height="340" Width="400">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="auto"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Label Content="Fill Team Data" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="1" Margin="15"/>
+
+        <!-- 1st Row -->
+        <StackPanel Grid.Row="1" Grid.Column="1" Margin="10">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <!-- Logo URL -->
+                <Label Content="Logo URL: " Grid.Row="0" Grid.Column="0" Margin="5" FontSize="14"/>
+                <TextBox Name="TeamLogo_tbox" Grid.Row="0" Grid.Column="1" Margin="5" FontSize="14" Width="200"/>
+
+                <!-- Name -->
+                <Label Content="Name: " Grid.Row="1" Grid.Column="0" Margin="5" FontSize="14"/>
+                <TextBox Name="TeamName_tbox" Grid.Row="1" Grid.Column="1" Margin="5" FontSize="14" Width="200"/>
+
+                <!-- Conference -->
+                <Label Content="Conference: " Grid.Row="2" Grid.Column="0" Margin="5" FontSize="14"/>
+                <TextBox Name="TeamConference_tbox" Grid.Row="2" Grid.Column="1" Margin="5" FontSize="14" Width="200"/>
+
+                <!-- Record -->
+                <Label Content="Record: " Grid.Row="3" Grid.Column="0" Margin="5" FontSize="14"/>
+                <TextBox Name="TeamRecord_tbox" Grid.Row="3" Grid.Column="1" Margin="5" FontSize="14" Width="200"/>
+
+            </Grid>
+
+        </StackPanel>
+
+        <!-- Buttons -->
+        <StackPanel Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Margin="0,20,0,20">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+
+                <Button Name="Save_Button" Content="Save" Click="Save_Event" Padding="24, 8" BorderThickness="0" FontSize="13" FontWeight="Medium" Margin="10, 0" Width="150" Grid.Row="0" Grid.Column="0" />
+                <Button Name="Cancel_Button" Content="Cancel" Click="Cancel_Event" Padding="24, 8" BorderThickness="0" FontSize="13" FontWeight="Medium" Margin="10, 0" Width="150" Grid.Row="0" Grid.Column="1" />
+            </Grid>
+        </StackPanel>
+    </Grid>
+</Window>

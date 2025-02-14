@@ -21,9 +21,9 @@ public class TeamController
     /// Adds a new team to the database.
     /// </summary>
     /// <param name="teamData">A list of strings containing team data.</param>
-    public void AddTeam(List<string> teamData)
+    public bool AddTeam(List<string> teamData)
     {
-        teamRepository.InsertTeam(teamData);
+        return teamRepository.InsertTeam(teamData);
     }
 
     /// <summary>
@@ -40,9 +40,9 @@ public class TeamController
     /// Deletes a team from the database.
     /// </summary>
     /// <param name="id">The ID of the team to delete.</param>
-    public void DeleteTeam(int id)
+    public bool DeleteTeam(int id)
     {
-        teamRepository.DeleteTeam(id);
+        return teamRepository.DeleteTeam(id);
     }
 
     /// <summary>

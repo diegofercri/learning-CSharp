@@ -42,5 +42,21 @@
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">Data Source=sql-server-diegofercri.database.windows.net;Initial Catalog=nbadb;Persist Security Info=True;User ID=diego;Encrypt=True;TrustServerCertificate=True</Value>
     </Setting>
+    <Setting Name="nbadb_2025_02_13T04_41ZConnectionString" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+  &lt;ConnectionString&gt;Data Source=tcp:sql-server-diegofercri.database.windows.net;Initial Catalog=nbadb_2025-02-13T04-41Z;User ID=diego&lt;/ConnectionString&gt;
+  &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Data Source=tcp:sql-server-diegofercri.database.windows.net;Initial Catalog=nbadb_2025-02-13T04-41Z;User ID=diego</Value>
+    </Setting>
+    <Setting Name="nbadb_2025_02_13T04_41ZConnectionString1" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+  &lt;ConnectionString&gt;Data Source=tcp:sql-server-diegofercri.database.windows.net;Initial Catalog=nbadb_2025-02-13T04-41Z;User ID=diego;Password=wjt7utrX*XAErMxis@GebdXM&lt;/ConnectionString&gt;
+  &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Data Source=tcp:sql-server-diegofercri.database.windows.net;Initial Catalog=nbadb_2025-02-13T04-41Z;User ID=diego;Password=wjt7utrX*XAErMxis@GebdXM</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

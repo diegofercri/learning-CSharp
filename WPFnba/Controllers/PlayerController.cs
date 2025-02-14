@@ -20,9 +20,9 @@ public class PlayerController
     /// Adds a new player to the database.
     /// </summary>
     /// <param name="playerData">A list of strings containing player data.</param>
-    public void AddPlayer(List<string> playerData)
+    public bool AddPlayer(List<string> playerData)
     {
-        playerRepository.InsertPlayer(playerData);
+        return playerRepository.InsertPlayer(playerData);
     }
 
     /// <summary>
@@ -39,9 +39,9 @@ public class PlayerController
     /// Deletes a player from the database.
     /// </summary>
     /// <param name="id">The ID of the player to delete.</param>
-    public void DeletePlayer(int id)
+    public bool DeletePlayer(int id)
     {
-        playerRepository.DeletePlayer(id);
+        return playerRepository.DeletePlayer(id);
     }
 
     /// <summary>
