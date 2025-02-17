@@ -29,14 +29,14 @@ public class TeamRepository
     /// Inserts a new team into the database.
     /// </summary>
     /// <param name="teamData">A list of strings containing team data.</param>
+    /// <returns>True if the team was successfully inserted; otherwise, false.</returns>
     internal bool InsertTeam(List<string> teamData)
     {
-        // Validar que los datos sean válidos
-        if (teamData == null || teamData.Count < 6) // Solo necesitamos 5 elementos sin el ID
+        // Validate that the data is valid
+        if (teamData == null || teamData.Count < 6) // We only need 5 elements without the ID
         {
-            throw new ArgumentException("Invalid team data provided.");
+            throw new ArgumentException("Invalid team data provided."); // "Datos de equipo no válidos proporcionados."
         }
-
         try
         {
             team team = new team();
@@ -64,17 +64,15 @@ public class TeamRepository
                         break;
                 }
             }
-
-            // Agregar el equipo a la base de datos
+            // Add the team to the database
             dataContext.GetTable<team>().InsertOnSubmit(team);
             dataContext.SubmitChanges();
-
-            return true; // Indica éxito
+            return true; // Indicates success
         }
         catch (Exception e)
         {
-            Console.WriteLine($"Error: {e.Message}");
-            return false; // Indica fallo
+            Console.WriteLine($"Error: {e.Message}"); // "Error: {e.Message}"
+            return false; // Indicates failure
         }
     }
 
@@ -82,13 +80,13 @@ public class TeamRepository
     /// Updates an existing team in the database.
     /// </summary>
     /// <param name="teamData">A list of strings containing updated team data.</param>
+    /// <returns>True if the team was successfully updated; otherwise, false.</returns>
     internal bool UpdateTeam(List<string> teamData)
     {
         if (teamData == null || teamData.Count < 6)
         {
-            throw new ArgumentException("Invalid team data provided.");
+            throw new ArgumentException("Invalid team data provided."); // "Datos de equipo no válidos proporcionados."
         }
-
         try
         {
             team team = new team();
@@ -116,7 +114,6 @@ public class TeamRepository
                         break;
                 }
             }
-
             team teamSearch = dataContext.GetTable<team>().First(t => t.id == team.id);
             foreach (var prop in team.GetType().GetProperties())
             {
@@ -125,13 +122,12 @@ public class TeamRepository
                     prop.SetValue(teamSearch, prop.GetValue(team));
                 }
             }
-
             dataContext.SubmitChanges();
             return true;
         }
         catch (Exception e)
         {
-            Console.WriteLine($"Error: {e.Message}");
+            Console.WriteLine($"Error: {e.Message}"); // "Error: {e.Message}"
             return false;
         }
     }
@@ -140,6 +136,7 @@ public class TeamRepository
     /// Deletes a team from the database.
     /// </summary>
     /// <param name="id">The ID of the team to delete.</param>
+    /// <returns>True if the team was successfully deleted; otherwise, false.</returns>
     internal bool DeleteTeam(int id)
     {
         try
@@ -151,7 +148,7 @@ public class TeamRepository
         }
         catch (Exception e)
         {
-            Console.WriteLine($"Error: {e.Message}");
+            Console.WriteLine($"Error: {e.Message}"); // "Error: {e.Message}"
             return false;
         }
     }
@@ -160,7 +157,7 @@ public class TeamRepository
     /// Retrieves a team by their unique ID.
     /// </summary>
     /// <param name="id">The ID of the team to retrieve.</param>
-    /// <returns>The team object if found; otherwise, null.</returns>
+    /// <returns>The team object as a DataTable if found; otherwise, null.</returns>
     internal DataTable GetTeam(int id)
     {
         try
@@ -206,12 +203,12 @@ public class TeamRepository
     /// <summary>
     /// Retrieves all teams from the database.
     /// </summary>
-    /// <returns>A DataTable of all teams.</returns>
+    /// <returns>A DataTable containing all teams.</returns>
     public DataTable GetTeams()
     {
         try
         {
-            // Search for players belonging to the specified team
+            // Search for teams and order them by conference and name
             List<team> teams = dataContext.GetTable<team>()
                 .OrderBy(t => t.conference)
                 .ThenBy(t => t.name)
@@ -233,7 +230,7 @@ public class TeamRepository
                 teams_dt.Rows.Clear();
             }
 
-            // Convert the list of players to a DataTable
+            // Convert the list of teams to a DataTable
             foreach (team t in teams)
             {
                 teams_dt.Rows.Add(
@@ -251,21 +248,21 @@ public class TeamRepository
         }
         catch (Exception e)
         {
-            Console.WriteLine($"Error: {e.Message}");
+            Console.WriteLine($"Error: {e.Message}"); // "Error: {e.Message}"
             return null;
         }
     }
 
     /// <summary>
-    /// Obtiene el ID máximo de la tabla de equipos.
+    /// Retrieves the maximum ID from the teams table.
     /// </summary>
     /// <returns>The maximum ID or 0 if no records exist.</returns>
     public int GetNextId()
     {
-        // Obtener el ID máximo de la base de datos
-        var maxId = dataContext.GetTable<team>().Max(t => t.id);
+        // Retrieve the maximum ID from the database
+        var maxId = dataContext.GetTable<team>().Max(t => (int?)t.id) ?? 0;
 
-        // Devolver el siguiente ID
+        // Return the next ID
         return maxId + 1;
     }
 }

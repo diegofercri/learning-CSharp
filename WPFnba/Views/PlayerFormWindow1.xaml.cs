@@ -1,83 +1,98 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Windows;
 
 namespace WPFnba.Views
 {
     /// <summary>
-    /// Interaction logic for PlayerFormWindow1.xaml
+    /// Interaction logic for PlayerFormWindow1.xaml.
+    /// This window allows users to add a new player.
     /// </summary>
     public partial class PlayerFormWindow1 : Window
     {
-        private PlayerController _playerController; // Instancia del controlador para gestionar la lógica de datos
+        private PlayerController _playerController; // Instance of the controller to manage data logic
 
+        /// <summary>
+        /// Constructor for the PlayerFormWindow1 class.
+        /// Initializes the window and assigns the controller instance.
+        /// </summary>
+        /// <param name="playerController">The controller instance for handling player operations.</param>
         public PlayerFormWindow1(PlayerController playerController)
         {
-            InitializeComponent(); // Se inicializan los componentes de la ventana
-
-            // Asigna la instancia del controlador
+            InitializeComponent(); // Initialize the components of the window
+            // Assign the controller instance
             _playerController = playerController;
         }
 
+        /// <summary>
+        /// Handles the "Save" button click event.
+        /// Adds a new player to the database.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">Event arguments.</param>
         private void Save_Event(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("You are going to add a registry. Are you sure?"); // Mensaje de confirmación
+            MessageBox.Show("You are about to add a record. Are you sure?"); // Confirmation message
 
             try
             {
-                // Extraer el ID y la última hora de modificación del DataTable
-                int id = 0; // ID del equipo
-                string dateLastUpdated = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"); // Fecha y hora actual
+                // Extract the ID and last updated timestamp
+                int id = 0; // Player ID (will be auto-generated)
+                string dateLastUpdated = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"); // Current date and time
 
-                // Crear una lista con los datos actualizados
+                // Create a list with the new player's data
                 List<string> newPlayerData = new List<string>
                 {
-                    id.ToString(), // ID del jugador
-                    PlayerFirstName_tbox.Text.Trim(), // Nombre del jugador
-                    PlayerLastName_tbox.Text.Trim(), // Apellido del jugador
-                    PlayerTeam_tbox.Text.Trim(), // Equipo del jugador
-                    PlayerPosition_tbox.Text.Trim(), // Posición del jugador
-                    PlayerDateOfBirth_tbox.Text.Trim(), // Fecha de nacimiento del jugador
-                    PlayerHeight_tbox.Text.Trim(), // Altura del jugador
-                    PlayerWeight_tbox.Text.Trim(), // Peso del jugador
-                    PlayerJerseyNumber_tbox.Text.Trim(), // Número del jugador
-                    PlayerAge_tbox.Text.Trim(), // Edad del jugador
-                    PlayerPoints_tbox.Text.Trim(), // Puntos en la carrera del jugador
-                    PlayerBlocks_tbox.Text.Trim(), // Bloqueos en la carrera del jugador
-                    PlayerAssists_tbox.Text.Trim(), // Asistencias en la carrera del jugador
-                    PlayerRebounds_tbox.Text.Trim(), // Rebotes en la carrera del jugador
-                    PlayerTurnovers_tbox.Text.Trim(), // Pérdidas en la carrera del jugador
-                    PlayerThree_tbox.Text.Trim(), // Porcentaje de triples en la carrera del jugador
-                    PlayerFreethrow_tbox.Text.Trim(), // Porcentaje de tiros libres en la carrera del jugador
-                    PlayerFieldGoal_tbox.Text.Trim(), // Porcentaje de tiros de campo en la carrera del jugador
-                    PlayerPhoto_tbox.Text.Trim(), // URL de la foto del jugador
-                    dateLastUpdated // Última hora de modificación
+                    id.ToString(), // Player ID
+                    PlayerFirstName_tbox.Text.Trim(), // First name
+                    PlayerLastName_tbox.Text.Trim(), // Last name
+                    PlayerTeam_tbox.Text.Trim(), // Team
+                    PlayerPosition_tbox.Text.Trim(), // Position
+                    PlayerDateOfBirth_tbox.Text.Trim(), // Date of birth
+                    PlayerHeight_tbox.Text.Trim(), // Height
+                    PlayerWeight_tbox.Text.Trim(), // Weight
+                    PlayerJerseyNumber_tbox.Text.Trim(), // Jersey number
+                    PlayerAge_tbox.Text.Trim(), // Age
+                    PlayerPoints_tbox.Text.Trim(), // Career points
+                    PlayerBlocks_tbox.Text.Trim(), // Career blocks
+                    PlayerAssists_tbox.Text.Trim(), // Career assists
+                    PlayerRebounds_tbox.Text.Trim(), // Career rebounds
+                    PlayerTurnovers_tbox.Text.Trim(), // Career turnovers
+                    PlayerThree_tbox.Text.Trim(), // Three-point percentage
+                    PlayerFreethrow_tbox.Text.Trim(), // Free-throw percentage
+                    PlayerFieldGoal_tbox.Text.Trim(), // Field goal percentage
+                    PlayerPhoto_tbox.Text.Trim(), // Photo URL
+                    dateLastUpdated // Last updated timestamp
                 };
 
-                // Llama al método del controlador para actualizar los datos en la base de datos
+                // Call the controller method to add the player to the database
                 bool success = _playerController.AddPlayer(newPlayerData);
 
-                if (success) // Verifica si ocurrió un error en la actualización
+                if (success) // Check if an error occurred during the addition
                 {
-                    MessageBox.Show("La actualización se ha realizado correctamente.");
-                    this.Close(); // Cierra la ventana después de la actualización
+                    MessageBox.Show("The player was added successfully.");
+                    this.Close(); // Close the window after the addition
                 }
                 else
                 {
-                    MessageBox.Show("Ha sucedido un error en la actualización.");
+                    MessageBox.Show("An error occurred while adding the player.");
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al procesar los datos: {ex.Message}");
+                MessageBox.Show($"Error processing the data: {ex.Message}");
             }
         }
-        
 
+        /// <summary>
+        /// Handles the "Cancel" button click event.
+        /// Closes the window without making any changes.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">Event arguments.</param>
         private void Cancel_Event(object sender, RoutedEventArgs e)
         {
-            this.Close(); // Cierra la ventana sin realizar ninguna modificación
+            this.Close(); // Close the window without making any modifications
         }
     }
 }

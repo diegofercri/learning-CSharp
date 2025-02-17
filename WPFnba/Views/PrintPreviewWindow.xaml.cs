@@ -6,76 +6,79 @@ using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-
-
 namespace WPFnba.Views
 {
     /// <summary>
-    /// Interaction logic for PrintPreviewWindow.xaml
+    /// Interaction logic for PrintPreviewWindow.xaml.
+    /// This window provides a print preview for a given Grid and handles printing functionality.
     /// </summary>
     public partial class PrintPreviewWindow : Window
     {
-        private Grid printView; // Grid que se imprimirá
+        private Grid printView; // The Grid to be printed
 
         /// <summary>
-        /// Constructor de la ventana de vista preliminar.
+        /// Constructor for the PrintPreviewWindow class.
+        /// Initializes the window and sets up the print preview document.
         /// </summary>
-        /// <param name="printView">Grid que contiene la información a imprimir.</param>
+        /// <param name="printView">The Grid containing the information to be printed.</param>
         public PrintPreviewWindow(Grid printView)
         {
             InitializeComponent();
             this.printView = printView;
 
-            // Crear un documento fijo para la vista preliminar de impresión
+            // Create a fixed document for the print preview
             FixedDocument fixedDoc = new FixedDocument();
 
-            // Crear la página de contenido
+            // Create the content page
             PageContent pageContent = new PageContent();
-            FixedPage fixedpage = new FixedPage();
+            FixedPage fixedPage = new FixedPage();
 
-            // Crear un VisualBrush para representar el contenido del Grid
+            // Create a VisualBrush to render the content of the Grid
             var visualBrush = new VisualBrush(printView);
 
-            // Crear un rectángulo que contendrá la vista previa del Grid
+            // Create a rectangle that will contain the preview of the Grid
             var rectangle = new Rectangle
             {
-                Width = 700,  // Ancho basado en el Grid original
-                Height = 800, // Alto basado en el Grid original
-                Fill = visualBrush  // Aplicar el contenido visual
+                Width = 700,  // Width based on the original Grid
+                Height = 800, // Height based on the original Grid
+                Fill = visualBrush  // Apply the visual content
             };
 
-            // Agregar el rectángulo a la página de impresión
-            fixedpage.Children.Add(rectangle);
-            ((IAddChild)pageContent).AddChild(fixedpage);
+            // Add the rectangle to the print page
+            fixedPage.Children.Add(rectangle);
+            ((IAddChild)pageContent).AddChild(fixedPage);
 
-            // Ajustar el tamaño de la página según el Grid
+            // Adjust the page size according to the Grid dimensions
             pageContent.Width = printView.ActualWidth;
             pageContent.Height = printView.ActualHeight;
 
-            // Agregar la página al documento fijo
+            // Add the page to the fixed document
             fixedDoc.Pages.Add(pageContent);
 
-            // Asignar el documento a la vista preliminar en la UI
+            // Assign the document to the print preview in the UI
             this.previewView.Document = fixedDoc;
         }
 
         /// <summary>
-        /// Evento que maneja la impresión del Grid cuando se presiona el botón "Imprimir".
+        /// Handles the "Print" button click event.
+        /// Opens a print dialog and sends the Grid to the printer as a PDF.
         /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">Event arguments.</param>
         private void Print_Event(object sender, RoutedEventArgs e)
         {
-            // Crear un diálogo de impresión
+            // Create a print dialog
             PrintDialog printDialog = new PrintDialog();
 
-            // Configurar la impresora por defecto como "Microsoft Print to PDF"
+            // Set the default printer to "Microsoft Print to PDF"
             printDialog.PrintQueue = new PrintQueue(new PrintServer(), "Microsoft Print to PDF");
 
-            // Ajustar el tamaño de la página según las dimensiones del Grid
+            // Adjust the page size according to the Grid dimensions
             printDialog.PrintTicket.PageMediaSize = new PageMediaSize(printView.ActualWidth, printView.ActualHeight);
-            printDialog.PrintTicket.PageOrientation = PageOrientation.Landscape; // Establecer modo horizontal
+            printDialog.PrintTicket.PageOrientation = PageOrientation.Landscape; // Set landscape orientation
 
-            // Enviar el Grid a imprimir como PDF
-            printDialog.PrintVisual(printView, "Grid a PDF");
+            // Send the Grid to the printer as a PDF
+            printDialog.PrintVisual(printView, "Grid to PDF");
         }
     }
 }

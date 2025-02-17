@@ -6,86 +6,105 @@ using System.Windows;
 namespace WPFnba.View
 {
     /// <summary>
-    /// Interaction logic for TeamFormWindow.xaml
+    /// Interaction logic for TeamFormWindow.xaml.
+    /// This window allows users to view and update team information.
     /// </summary>
     public partial class TeamFormWindow : Window
     {
-        private TeamController _teamController; // Instancia del controlador para gestionar la lógica de datos
-        private DataRow teamRow; // Almacena la fila del equipo seleccionado para su actualización
+        private TeamController _teamController; // Instance of the controller to manage data logic
+        private DataRow teamRow; // Stores the selected team's row for updates
 
+        /// <summary>
+        /// Constructor for the TeamFormWindow class.
+        /// Initializes the window and loads team data into the form fields.
+        /// </summary>
+        /// <param name="teamController">The controller instance for handling team operations.</param>
+        /// <param name="teamData">A DataTable containing the team's data to be loaded.</param>
         public TeamFormWindow(TeamController teamController, DataTable teamData)
         {
-            InitializeComponent(); // Se inicializan los componentes de la ventana
+            InitializeComponent(); // Initialize the components of the window
 
             if (teamData == null || teamData.Rows.Count == 0)
             {
-                MessageBox.Show("No se proporcionaron datos válidos para el equipo.");
-                this.Close(); // Cierra la ventana si no hay datos válidos
+                MessageBox.Show("No valid team data was provided.");
+                this.Close(); // Close the window if no valid data is available
                 return;
             }
 
-            // Asigna la instancia del controlador
+            // Assign the controller instance
             _teamController = teamController;
 
-            // Obtiene la primera fila del DataTable (asumimos que solo hay un equipo)
+            // Get the first row from the DataTable (assuming only one team is passed)
             teamRow = teamData.Rows[0];
 
-            // Carga los datos del equipo en los campos de la interfaz
-            this.TeamLogo_tbox.Text = teamRow["teamLogoUrl"]?.ToString() ?? string.Empty; // URL del logo del equipo
-            this.TeamName_tbox.Text = teamRow["name"]?.ToString() ?? string.Empty; // Nombre del equipo
-            this.TeamConference_tbox.Text = teamRow["conference"]?.ToString() ?? string.Empty; // Conferencia del equipo
-            this.TeamRecord_tbox.Text = teamRow["record"]?.ToString() ?? string.Empty; // Récord del equipo
+            // Load the team's data into the UI fields
+            this.TeamLogo_tbox.Text = teamRow["teamLogoUrl"]?.ToString() ?? string.Empty; // Team logo URL
+            this.TeamName_tbox.Text = teamRow["name"]?.ToString() ?? string.Empty; // Team name
+            this.TeamConference_tbox.Text = teamRow["conference"]?.ToString() ?? string.Empty; // Team conference
+            this.TeamRecord_tbox.Text = teamRow["record"]?.ToString() ?? string.Empty; // Team record
         }
 
+        /// <summary>
+        /// Handles the "Save" button click event.
+        /// Updates the team's data in the database.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">Event arguments.</param>
         private void Save_Event(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("You are going to modify a registry. Are you sure?"); // Mensaje de confirmación
+            MessageBox.Show("You are about to modify a record. Are you sure?"); // Confirmation message
 
             if (teamRow == null)
             {
-                MessageBox.Show("Los datos del equipo no están disponibles.");
+                MessageBox.Show("Team data is not available.");
                 return;
             }
 
             try
             {
-                // Extraer el ID y la última hora de modificación del DataTable
-                int id = Convert.ToInt32(teamRow["id"]); // ID del equipo
-                string dateLastUpdated = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"); // Fecha y hora actual
+                // Extract the ID and last updated timestamp from the DataTable
+                int id = Convert.ToInt32(teamRow["id"]); // Team ID
+                string dateLastUpdated = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"); // Current date and time
 
-                // Crear una lista con los datos actualizados
+                // Create a list with the updated data
                 List<string> updatedTeamData = new List<string>
                 {
-                    id.ToString(), // ID del equipo
-                    TeamName_tbox.Text.Trim(), // Nombre del equipo
-                    TeamConference_tbox.Text.Trim(), // Conferencia del equipo
-                    TeamRecord_tbox.Text.Trim(), // Récord del equipo
-                    TeamLogo_tbox.Text.Trim(), // URL del logo del equipo
-                    dateLastUpdated // Última hora de modificación
+                    id.ToString(), // Team ID
+                    TeamName_tbox.Text.Trim(), // Team name
+                    TeamConference_tbox.Text.Trim(), // Team conference
+                    TeamRecord_tbox.Text.Trim(), // Team record
+                    TeamLogo_tbox.Text.Trim(), // Team logo URL
+                    dateLastUpdated // Last updated timestamp
                 };
 
-                // Llama al método del controlador para actualizar los datos en la base de datos
+                // Call the controller method to update the data in the database
                 bool success = _teamController.UpdateTeam(updatedTeamData);
 
-                if (success) // Verifica si ocurrió un error en la actualización
+                if (success) // Check if an error occurred during the update
                 {
-                    MessageBox.Show("La actualización se ha realizado correctamente.");
-                    this.Close(); // Cierra la ventana después de la actualización
+                    MessageBox.Show("The update was successful.");
+                    this.Close(); // Close the window after the update
                 }
                 else
                 {
-                    MessageBox.Show("Ha sucedido un error en la actualización.");
+                    MessageBox.Show("An error occurred during the update.");
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al procesar los datos: {ex.Message}");
+                MessageBox.Show($"Error processing the data: {ex.Message}");
             }
         }
 
+        /// <summary>
+        /// Handles the "Cancel" button click event.
+        /// Closes the window without making any changes.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">Event arguments.</param>
         private void Cancel_Event(object sender, RoutedEventArgs e)
         {
-            this.Close(); // Cierra la ventana sin realizar ninguna modificación
+            this.Close(); // Close the window without making any modifications
         }
     }
 }

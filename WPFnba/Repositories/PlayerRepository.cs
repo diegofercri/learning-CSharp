@@ -32,13 +32,13 @@ public class PlayerRepository
     /// Inserts a new player into the database.
     /// </summary>
     /// <param name="playerData">A list of strings containing player data.</param>
+    /// <returns>True if the player was successfully inserted; otherwise, false.</returns>
     public bool InsertPlayer(List<string> playerData)
     {
         if (playerData == null || playerData.Count < 19)
         {
             throw new ArgumentException("Invalid player data provided.");
         }
-
         try
         {
             player player = new player();
@@ -124,7 +124,7 @@ public class PlayerRepository
         }
         catch (Exception e)
         {
-            Console.WriteLine($"Error: {e.Message}");
+            Console.WriteLine($"Error: {e.Message}"); // "Error: {e.Message}"
             return false;
         }
     }
@@ -133,16 +133,15 @@ public class PlayerRepository
     /// Updates an existing player in the database.
     /// </summary>
     /// <param name="playerData">A list of strings containing updated player data.</param>
+    /// <returns>True if the player was successfully updated; otherwise, false.</returns>
     public bool UpdatePlayer(List<string> playerData)
     {
         if (playerData == null || playerData.Count < 19)
         {
             throw new ArgumentException("Invalid player data provided.");
         }
-
         try
         {
-
             player player = new player();
             for (int i = 0; i < playerData.Count; i++)
             {
@@ -225,15 +224,17 @@ public class PlayerRepository
         }
         catch (Exception e)
         {
-            Console.WriteLine($"Error: {e.Message}");
+            Console.WriteLine($"Error: {e.Message}"); // "Error: {e.Message}"
             return false;
         }
     }
+
 
     /// <summary>
     /// Deletes a player from the database.
     /// </summary>
     /// <param name="id">The ID of the player to delete.</param>
+    /// <returns>True if the player was successfully deleted; otherwise, false.</returns>
     public bool DeletePlayer(int id)
     {
         try
@@ -245,7 +246,7 @@ public class PlayerRepository
         }
         catch (Exception e)
         {
-            Console.WriteLine($"Error: {e.Message}");
+            Console.WriteLine($"Error: {e.Message}"); // "Error: {e.Message}"
             return false;
         }
     }
@@ -254,10 +255,11 @@ public class PlayerRepository
     /// Retrieves a player by their unique ID.
     /// </summary>
     /// <param name="id">The ID of the player to retrieve.</param>
-    /// <returns>The player object if found; otherwise, null.</returns>
+    /// <returns>The player object as a DataTable if found; otherwise, null.</returns>
     internal DataTable GetPlayer(int id)
     {
-        try {
+        try
+        {
             // Search for the player by ID
             player player = dataContext.GetTable<player>().First(p => p.id == id);
 
@@ -324,19 +326,17 @@ public class PlayerRepository
         }
     }
 
-    // Examen 3
     /// <summary>
-    /// Retrieves player data by their unique ID.
+    /// Retrieves a player's ID by their last name.
     /// </summary>
-    /// <param name="id">The ID of the player to retrieve.</param>
-    /// <returns>The player data object if found; otherwise, null.</returns>
+    /// <param name="lastName">The last name of the player to retrieve.</param>
+    /// <returns>The player's ID if found; otherwise, -1.</returns>
     internal int GetPlayerByLastName(string lastName)
     {
         try
         {
-            // Search for the player by lastName
+            // Search for the player by last name
             player player = dataContext.GetTable<player>().First(p => p.lastName == lastName);
-
             return player.id;
         }
         catch (Exception e)
@@ -345,6 +345,11 @@ public class PlayerRepository
         }
     }
 
+    /// <summary>
+    /// Retrieves the photo URL of a player by their unique ID.
+    /// </summary>
+    /// <param name="id">The ID of the player whose photo is to be retrieved.</param>
+    /// <returns>The player's photo URL as a string if found; otherwise, null.</returns>
     internal string GetPlayerPhoto(int id)
     {
         try
@@ -363,7 +368,7 @@ public class PlayerRepository
     /// Retrieves player data by their unique ID.
     /// </summary>
     /// <param name="id">The ID of the player to retrieve.</param>
-    /// <returns>The player data object if found; otherwise, null.</returns>
+    /// <returns>The player data object as a DataTable if found; otherwise, null.</returns>
     internal DataTable GetPlayerData(int id)
     {
         try
@@ -415,10 +420,10 @@ public class PlayerRepository
     }
 
     /// <summary>
-    /// Retrieves a player stats by their unique ID.
+    /// Retrieves player stats by their unique ID.
     /// </summary>
     /// <param name="id">The ID of the player to retrieve.</param>
-    /// <returns>The player stats object if found; otherwise, null.</returns>
+    /// <returns>The player stats object as a DataTable if found; otherwise, null.</returns>
     internal DataTable GetPlayerStats(int id)
     {
         try
@@ -466,9 +471,9 @@ public class PlayerRepository
     }
 
     /// <summary>
-    /// Retrieves all players belonging to a specific team by team name.
+    /// Retrieves all players belonging to a specific team by team ID.
     /// </summary>
-    /// <param name="teamName">The name of the team.</param>
+    /// <param name="teamId">The ID of the team.</param>
     /// <returns>A DataTable containing all players from the specified team.</returns>
     internal DataTable GetPlayersByTeam(int teamId)
     {
@@ -553,15 +558,16 @@ public class PlayerRepository
     }
 
     /// <summary>
-    /// Obtiene el ID máximo de la tabla de jugadores.
+    /// Retrieves the next available ID for a new player.
     /// </summary>
-    /// <returns>The maximum ID or 0 if no records exist.</returns>
+    /// <returns>The maximum ID plus one, or 1 if no records exist.</returns>
     public int GetNextId()
     {
-        // Obtener el ID máximo de la base de datos
-        var maxId = dataContext.GetTable<team>().Max(t => t.id);
+        // Retrieve the maximum ID from the database
+        var maxId = dataContext.GetTable<player>().Max(t => (int?)t.id) ?? 0;
 
-        // Devolver el siguiente ID
+        // Return the next ID
         return maxId + 1;
     }
+
 }

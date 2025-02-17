@@ -1,68 +1,84 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Windows;
 
 namespace WPFnba.Views
 {
     /// <summary>
-    /// Interaction logic for TeamFormWindow1.xaml
+    /// Interaction logic for TeamFormWindow1.xaml.
+    /// This window allows users to add a new team.
     /// </summary>
     public partial class TeamFormWindow1 : Window
     {
-        private TeamController _teamController; // Instancia del controlador para gestionar la lógica de datos
+        private TeamController _teamController; // Instance of the controller to manage data logic
 
+        /// <summary>
+        /// Constructor for the TeamFormWindow1 class.
+        /// Initializes the window and assigns the controller instance.
+        /// </summary>
+        /// <param name="teamController">The controller instance for handling team operations.</param>
         public TeamFormWindow1(TeamController teamController)
         {
-            InitializeComponent(); // Se inicializan los componentes de la ventana
-
-            // Asigna la instancia del controlador
+            InitializeComponent(); // Initialize the components of the window
+            // Assign the controller instance
             _teamController = teamController;
         }
 
+        /// <summary>
+        /// Handles the "Save" button click event.
+        /// Adds a new team to the database.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">Event arguments.</param>
         private void Save_Event(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("You are going to add a registry. Are you sure?"); // Mensaje de confirmación
+            MessageBox.Show("You are about to add a record. Are you sure?"); // Confirmation message
 
             try
             {
-                // Extraer el ID y la última hora de modificación del DataTable
-                int id = 0; // ID del equipo
-                string dateLastUpdated = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"); // Fecha y hora actual
+                // Extract the ID and last updated timestamp
+                int id = 0; // Team ID (will be auto-generated)
+                string dateLastUpdated = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"); // Current date and time
 
-                // Crear una lista con los datos actualizados
+                // Create a list with the new team's data
                 List<string> newTeamData = new List<string>
                 {
-                    id.ToString(), // ID del equipo
-                    TeamName_tbox.Text.Trim(), // Nombre del equipo
-                    TeamConference_tbox.Text.Trim(), // Conferencia del equipo
-                    TeamRecord_tbox.Text.Trim(), // Récord del equipo
-                    TeamLogo_tbox.Text.Trim(), // URL del logo del equipo
-                    dateLastUpdated // Última hora de modificación
+                    id.ToString(), // Team ID
+                    TeamName_tbox.Text.Trim(), // Team name
+                    TeamConference_tbox.Text.Trim(), // Team conference
+                    TeamRecord_tbox.Text.Trim(), // Team record
+                    TeamLogo_tbox.Text.Trim(), // Team logo URL
+                    dateLastUpdated // Last updated timestamp
                 };
 
-                // Llama al método del controlador para actualizar los datos en la base de datos
+                // Call the controller method to add the team to the database
                 bool success = _teamController.AddTeam(newTeamData);
 
-                if (success) // Verifica si ocurrió un error en la actualización
+                if (success) // Check if an error occurred during the addition
                 {
-                    MessageBox.Show("La actualización se ha realizado correctamente.");
-                    this.Close(); // Cierra la ventana después de la actualización
+                    MessageBox.Show("The team was added successfully.");
+                    this.Close(); // Close the window after the addition
                 }
                 else
                 {
-                    MessageBox.Show("Ha sucedido un error en la actualización.");
+                    MessageBox.Show("An error occurred while adding the team.");
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al procesar los datos: {ex.Message}");
+                MessageBox.Show($"Error processing the data: {ex.Message}");
             }
         }
 
+        /// <summary>
+        /// Handles the "Cancel" button click event.
+        /// Closes the window without making any changes.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">Event arguments.</param>
         private void Cancel_Event(object sender, RoutedEventArgs e)
         {
-            this.Close(); // Cierra la ventana sin realizar ninguna modificación
+            this.Close(); // Close the window without making any modifications
         }
     }
 }
