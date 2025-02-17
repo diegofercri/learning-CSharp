@@ -11,7 +11,6 @@ namespace WPFnba.Views
     public partial class PlayerFormWindow1 : Window
     {
         private PlayerController _playerController; // Instancia del controlador para gestionar la lógica de datos
-        private DataRow playerRow; // Almacena la fila del equipo seleccionado para su actualización
 
         public PlayerFormWindow1(PlayerController playerController)
         {
@@ -74,6 +73,7 @@ namespace WPFnba.Views
                 MessageBox.Show($"Error al procesar los datos: {ex.Message}");
             }
         }
+        
 
         private void Cancel_Event(object sender, RoutedEventArgs e)
         {

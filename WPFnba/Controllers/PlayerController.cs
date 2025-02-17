@@ -72,6 +72,22 @@ public class PlayerController
         return playerRepository.GetPlayer(id);
     }
 
+    // Examen 3
+    /// <summary>
+    /// Retrieves a player by their lastname.
+    /// </summary>
+    /// <param name="lastName">The lastname of the player to retrieve.</param>
+    /// <returns>The player object if found; otherwise, null.</returns>
+    public int GetPlayerByLastName(string lastName)
+    {
+        return playerRepository.GetPlayerByLastName(lastName);
+    }
+
+    public string GetPlayerPhoto(int id)
+    {
+        return playerRepository.GetPlayerPhoto(id);
+    }
+
     /// <summary>
     /// Retrieves player data by their unique ID.
     /// </summary>

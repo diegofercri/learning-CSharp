@@ -1,0 +1,17 @@
+﻿
+<Window x:Class="WPFnba.Views.PrintPreviewWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPFnba.Views"
+        mc:Ignorable="d"
+        Title="Preview Window" Height="830" Width="1000">
+    <!-- Examen 1 -->
+    <Grid>
+        <StackPanel>
+            <DocumentViewer Name="previewView" Margin="20" Height="700" Width="800"/>
+            <Button Name="Print_Button" Content="Print" Click="Print_Event" Padding="24, 8" BorderThickness="0" FontSize="13" FontWeight="Medium" Width="150" Grid.Row="0" Grid.Column="3" />
+        </StackPanel>
+    </Grid>
+</Window>

@@ -324,6 +324,40 @@ public class PlayerRepository
         }
     }
 
+    // Examen 3
+    /// <summary>
+    /// Retrieves player data by their unique ID.
+    /// </summary>
+    /// <param name="id">The ID of the player to retrieve.</param>
+    /// <returns>The player data object if found; otherwise, null.</returns>
+    internal int GetPlayerByLastName(string lastName)
+    {
+        try
+        {
+            // Search for the player by lastName
+            player player = dataContext.GetTable<player>().First(p => p.lastName == lastName);
+
+            return player.id;
+        }
+        catch (Exception e)
+        {
+            return -1;
+        }
+    }
+
+    internal string GetPlayerPhoto(int id)
+    {
+        try
+        {
+            // Search for the player by ID
+            player player = dataContext.GetTable<player>().First(p => p.id == id);
+            return player.headShotUrl;
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
+    }
 
     /// <summary>
     /// Retrieves player data by their unique ID.
@@ -379,7 +413,6 @@ public class PlayerRepository
             return null;
         }
     }
-
 
     /// <summary>
     /// Retrieves a player stats by their unique ID.

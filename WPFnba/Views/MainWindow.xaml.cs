@@ -145,8 +145,7 @@ namespace WPFnba.View
             }
         }
 
-
-        private void LoadPlayerPhoto(int playerId)
+        internal void LoadPlayerPhoto(int playerId)
         {
             if (teamPlayers == null)
             {
@@ -168,7 +167,6 @@ namespace WPFnba.View
                         bitmap.UriSource = new Uri(headShotUrl, UriKind.Absolute);
                         bitmap.EndInit();
                         PlayerPhoto.Source = bitmap;
-                        PlayerPhoto2.Source = bitmap;
                     }
                     catch (Exception ex)
                     {
@@ -196,8 +194,32 @@ namespace WPFnba.View
             }
         }
 
-        private void LoadPlayerData(int playerId)
+        internal void LoadPlayerData(int playerId)
         {
+            // Examen 3
+            // Obtener los datos del jugador desde el controlador
+            string photoUrl = _playerController.GetPlayerPhoto(playerId);
+
+            if (!string.IsNullOrEmpty(photoUrl))
+            {
+                try
+                {
+                    BitmapImage bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.UriSource = new Uri(photoUrl, UriKind.Absolute);
+                    bitmap.EndInit();
+                    PlayerPhoto2.Source = bitmap;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error loading the player photo: {ex.Message}");
+                }
+            }
+            else
+            {
+                MessageBox.Show("There is no photo for the selected player.");
+            }
+
             // Obtener los datos del jugador desde el controlador
             DataTable playerData = _playerController.GetPlayerData(playerId);
 
@@ -412,6 +434,24 @@ namespace WPFnba.View
             }
         }
 
+        // Examen 3
+        // Search menu event
+        private void Search_Event(object sender, RoutedEventArgs e)
+        {
+            // Create a new instance of the PrintWindow and show it as modal
+            SearchFormWindow searchWindow = new SearchFormWindow(_playerController, this);
+            searchWindow.ShowDialog();
+        }
+
+        // Examen 1
+        // Print menu event
+        private void Print_Event(object sender, RoutedEventArgs e)
+        {
+            // Create a new instance of the PrintWindow and show it as modal
+            PrintPreviewWindow preview = new PrintPreviewWindow(printView);
+            preview.ShowDialog();
+        }
+
         // Help menu event
         private void Help_Event(object sender, RoutedEventArgs e)
         {
@@ -454,6 +494,20 @@ namespace WPFnba.View
             if (e.Key == Key.D && (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
             {
                 Delete_Event(sender, e);
+            }
+
+            // Examen 3
+            // Print Shortcut with Ctrl + B
+            if (e.Key == Key.B && (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
+            {
+                Search_Event(sender, e);
+            }
+
+            // Examen 1
+            // Print Shortcut with Ctrl + P
+            if (e.Key == Key.P && (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
+            {
+                Print_Event(sender, e);
             }
 
             // Help Shortcut with Ctrl + H

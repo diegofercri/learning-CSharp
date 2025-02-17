@@ -11,7 +11,6 @@ namespace WPFnba.Views
     public partial class TeamFormWindow1 : Window
     {
         private TeamController _teamController; // Instancia del controlador para gestionar la lógica de datos
-        private DataRow teamRow; // Almacena la fila del equipo seleccionado para su actualización
 
         public TeamFormWindow1(TeamController teamController)
         {
