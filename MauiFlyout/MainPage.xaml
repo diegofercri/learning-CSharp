@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<FlyoutPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            x:Class="MauiFlyout.MainPage">
+    <FlyoutPage.Flyout>
+        <ContentPage Title="Menu">
+            <StackLayout>
+                <Button Text="Página 1" Clicked="OnOption1Clicked"/>
+                <Button Text="Página 2" Clicked="OnOption2Clicked"/>
+                <Button Text="Página 3" Clicked="OnOption3Clicked"/>
+            </StackLayout>
+        </ContentPage>
+    </FlyoutPage.Flyout>
+    <FlyoutPage.Detail>
+        <NavigationPage x:Name="NavPage" Title="Inicio" />
+    </FlyoutPage.Detail>
+</FlyoutPage>
