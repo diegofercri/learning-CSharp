@@ -63,13 +63,19 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Pages\Page1.xaml">
+	  <Compile Update="Pages\DecimalCalculatorPage.xaml.cs">
+	    <DependentUpon>DecimalCalculatorPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Pages\BinaryConverterPage.xaml.cs">
+	    <DependentUpon>BinaryConverterPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Pages\DecimalCalculatorPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\Page2.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Pages\Page3.xaml">
+	  <MauiXaml Update="Pages\BinaryConverterPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

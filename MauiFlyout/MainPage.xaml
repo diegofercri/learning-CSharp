@@ -5,13 +5,12 @@
     <FlyoutPage.Flyout>
         <ContentPage Title="Menu">
             <StackLayout>
-                <Button Text="Página 1" Clicked="OnOption1Clicked"/>
-                <Button Text="Página 2" Clicked="OnOption2Clicked"/>
-                <Button Text="Página 3" Clicked="OnOption3Clicked"/>
+                <Button Text="Decimal Calculator" Clicked="OnOption1Clicked" BackgroundColor="{DynamicResource AccentColor}" TextColor="{DynamicResource BlackTextColor}" BorderWidth="0" CornerRadius="22"/>
+                <Button Text="Binary Converter" Clicked="OnOption2Clicked" BackgroundColor="{DynamicResource AccentColor}" TextColor="{DynamicResource BlackTextColor}" BorderWidth="0" CornerRadius="22"/>
             </StackLayout>
         </ContentPage>
     </FlyoutPage.Flyout>
     <FlyoutPage.Detail>
-        <NavigationPage x:Name="NavPage" Title="Inicio" />
+        <NavigationPage x:Name="NavPage" Title="Start" BackgroundColor="{DynamicResource BackgroundColor}"/>
     </FlyoutPage.Detail>
 </FlyoutPage>
