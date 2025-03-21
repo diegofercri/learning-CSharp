@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="Ex2Ev.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:Ex2Ev"
+    Shell.FlyoutBehavior="Flyout"
+    Title="Ex2Ev">
+    
+    <!--
+    <ShellItem>
+        <ShellSection Title="Inicio">
+            <ShellContent ContentTemplate="{DataTemplate local:MainPage}"
+                      Route="MainPage" />
+        </ShellSection>
+    </ShellItem>
+    -->
+    <ShellItem>
+        <ShellSection Title="Calculadora">
+            <ShellContent ContentTemplate="{DataTemplate local:Pages.Page1}"
+                      Route="Pages.Page1" />
+        </ShellSection>
+    </ShellItem>
+
+    <ShellItem>
+        <ShellSection Title="Conversor Binario">
+            <ShellContent ContentTemplate="{DataTemplate local:Pages.Page2}"
+                      Route="Pages.Page2" />
+        </ShellSection>
+    </ShellItem>
+
+    <ShellItem>
+        <ShellSection Title="Conversor Moneda">
+            <ShellContent ContentTemplate="{DataTemplate local:Pages.Page3}"
+                  Route="Pages.Page3" />
+        </ShellSection>
+    </ShellItem>
+
+</Shell>

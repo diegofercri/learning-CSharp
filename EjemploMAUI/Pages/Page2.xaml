@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EjemploMAUI.Pages.Page2"
+             Title="Binary Converter"
+             BackgroundColor="{StaticResource GrayLight}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+            <!-- Resultado -->
+            <Label x:Name="Result"
+                   Text="Resultado aparecerá aquí"
+                   TextColor="{StaticResource Black}"
+                   FontSize="18"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center" />
+
+            <!-- Entrada -->
+            <Entry x:Name="Input"
+                   Placeholder="Ingresa un número"
+                   TextColor="{StaticResource Black}"
+                   PlaceholderColor="{StaticResource GrayDark}"
+                   BackgroundColor="{StaticResource White}"
+                   FontSize="16"
+                   HeightRequest="50" />
+
+            <!-- Botones de Conversión -->
+            <Grid RowDefinitions="*,*" ColumnDefinitions="*,*">
+                <Button Text="Binario a Decimal"
+                        Clicked="OnBinaryToDecimalClicked"
+                        Grid.Row="0" Grid.Column="0"
+                        Style="{StaticResource ActionButtonStyle}"
+                        Margin="0,0,5,5" />
+                <Button Text="Decimal a Binario"
+                        Clicked="OnDecimalToBinaryClicked"
+                        Grid.Row="0" Grid.Column="1"
+                        Style="{StaticResource ActionButtonStyle}"
+                        Margin="5,0,0,5" />
+            </Grid>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

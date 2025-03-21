@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- Colores Base -->
+    <Color x:Key="Primary">#FF9500</Color>
+    <!-- Naranja como color primario (énfasis) -->
+    <Color x:Key="White">#FFFFFF</Color>
+    <!-- Blanco puro -->
+    <Color x:Key="Black">#000000</Color>
+    <!-- Negro puro -->
+    <Color x:Key="GrayLight">#F2F2F7</Color>
+    <!-- Gris claro para fondos -->
+    <Color x:Key="GrayDark">#3A3A3C</Color>
+    <!-- Gris oscuro para texto secundario -->
+
+    <!-- Estilo Global para Páginas -->
+    <Style TargetType="Page">
+        <Setter Property="BackgroundColor" Value="{StaticResource GrayLight}" />
+        <Setter Property="Padding" Value="20" />
+    </Style>
+
+    <!-- Estilo para Etiquetas -->
+    <Style TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource Black}" />
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="HorizontalTextAlignment" Value="End" />
+        <Setter Property="FontFamily" Value="System" />
+    </Style>
+
+    <!-- Estilo para Entradas -->
+    <Style TargetType="Entry">
+        <Setter Property="TextColor" Value="{StaticResource Black}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource White}" />
+        <Setter Property="FontSize" Value="24" />
+        <Setter Property="FontFamily" Value="System" />
+        <Setter Property="HeightRequest" Value="60" />
+    </Style>
+
+    <!-- Estilo para Botones Numéricos -->
+    <Style TargetType="Button" x:Key="NumberButtonStyle">
+        <Setter Property="TextColor" Value="{StaticResource Black}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource White}" />
+        <Setter Property="FontSize" Value="24" />
+        <Setter Property="FontFamily" Value="System" />
+        <Setter Property="CornerRadius" Value="30" />
+        <Setter Property="HeightRequest" Value="70" />
+        <Setter Property="WidthRequest" Value="70" />
+        <Setter Property="BorderWidth" Value="1" />
+        <Setter Property="BorderColor" Value="{StaticResource GrayLight}" />
+    </Style>
+
+    <!-- Estilo para Botones de Acción -->
+    <Style TargetType="Button" x:Key="ActionButtonStyle">
+        <Setter Property="TextColor" Value="{StaticResource White}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+        <Setter Property="FontSize" Value="24" />
+        <Setter Property="FontFamily" Value="System" />
+        <Setter Property="CornerRadius" Value="30" />
+        <Setter Property="HeightRequest" Value="70" />
+        <Setter Property="WidthRequest" Value="70" />
+    </Style>
+</ResourceDictionary>

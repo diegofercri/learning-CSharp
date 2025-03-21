@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Ex2Ev.Pages.Page1"
+             Title="Binary Converter"
+             BackgroundColor="{DynamicResource BackgroundColor}">
+    
+    <StackLayout Padding="20">
+        <!-- Result -->
+        <Label x:Name="Result" Text="Result will appear here" Style="{StaticResource LabelStyle}" />
+
+        <!-- Input -->
+        <Entry x:Name="Input" Placeholder="Enter number" Style="{StaticResource EntryStyle}" />
+
+        <!-- Convert Buttons -->
+        <Grid RowDefinitions="*,*" ColumnDefinitions="*,*">
+            <Button Text="Binary to Decimal" Clicked="OnBinaryToDecimalClicked" Grid.Row="0" Grid.Column="0" Style="{StaticResource AccentButtonStyle}" />
+            <Button Text="Decimal to Binary" Clicked="OnDecimalToBinaryClicked" Grid.Row="0" Grid.Column="1" Style="{StaticResource AccentButtonStyle}" />
+        </Grid>
+    </StackLayout>
+</ContentPage>

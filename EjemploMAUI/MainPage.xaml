@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EjemploMAUI.MainPage"
+             Title="Inicio"
+             BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,50"
+            Spacing="25"
+            HorizontalOptions="Center"
+            VerticalOptions="Center">
+
+            <!-- Texto de Bienvenida -->
+            <Label Text="Bienvenido a mi Calculadora"
+                   Style="{StaticResource Headline}"
+                   HorizontalTextAlignment="Center"
+                   SemanticProperties.Description="Texto de bienvenida a la calculadora" />
+            
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EjemploMAUI.Pages.ChangePage"
+             Title="Convertidor de Moneda"
+             BackgroundColor="{StaticResource GrayLight}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+            <!-- Entrada para la cantidad en euros -->
+            <Label Text="Introduce la cantidad en euros:"
+                   TextColor="{StaticResource Black}"
+                   FontSize="Medium"
+                   FontFamily="System" />
+
+            <Entry x:Name="EurosEntry"
+                   Keyboard="Numeric"
+                   Placeholder="Ejemplo: 100.50"
+                   TextColor="{StaticResource Black}"
+                   PlaceholderColor="{StaticResource GrayDark}"
+                   BackgroundColor="{StaticResource White}"
+                   FontSize="16"
+                   HeightRequest="50" />
+
+            <!-- Botón para realizar la conversión -->
+            <Button Text="Calcular Cambio"
+                    Clicked="OnCalculateClicked"
+                    Style="{StaticResource ActionButtonStyle}"
+                    Margin="0,20,0,0" />
+
+            <!-- Resultados de la conversión -->
+            <Label Text="Resultado:"
+                   TextColor="{StaticResource Black}"
+                   FontSize="Large"
+                   FontFamily="System"
+                   Margin="0,20,0,0" />
+
+            <Label x:Name="DollarsResult"
+                   TextColor="{StaticResource GrayDark}"
+                   FontSize="Medium"
+                   FontFamily="System" />
+
+            <Label x:Name="PoundsResult"
+                   TextColor="{StaticResource GrayDark}"
+                   FontSize="Medium"
+                   FontFamily="System" />
+
+            <Label x:Name="YenResult"
+                   TextColor="{StaticResource GrayDark}"
+                   FontSize="Medium"
+                   FontFamily="System" />
+
+            <Label x:Name="YuanResult"
+                   TextColor="{StaticResource GrayDark}"
+                   FontSize="Medium"
+                   FontFamily="System" />
+
+            <Label x:Name="PesosResult"
+                   TextColor="{StaticResource GrayDark}"
+                   FontSize="Medium"
+                   FontFamily="System" />
+
+            <Label x:Name="RublesResult"
+                   TextColor="{StaticResource GrayDark}"
+                   FontSize="Medium"
+                   FontFamily="System" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
